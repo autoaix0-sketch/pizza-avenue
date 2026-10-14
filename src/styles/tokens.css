@@ -1,27 +1,28 @@
 /* =========================================================================
    PIZZA AVENUE — jetons de marque
    =========================================================================
-   Palette relevée du brand board (brand/asset brand.png) : crème chaude,
-   vert forêt, rouge tomate, jaune fromage. Un seul mode, clair — voir la
+   Palette relevée sur le logo mascotte Avenue Pizza et les posts Instagram
+   (WEBSITE_CREATIVE_DIRECTION.md) : crème, vert bouteille, rouge tomate,
+   moutarde. Toutes les paires texte/fond passent WCAG AA. Un seul mode, clair — voir la
    note dans styles/base.css sur pourquoi il n'y a pas de mode sombre.
    ========================================================================= */
 
 :root {
   /* ---- couleurs de marque ---- */
-  --cream:      #F8F1DF;
-  --cream-soft: #F1E7CC;   /* un cran plus chaud, pour distinguer des blocs sur --cream */
-  --forest:     #245B3A;
-  --forest-deep:#173D27;
-  --tomato:     #D94B32;
-  --gold:       #F2B632;
+  --cream:      #F7EBD3;
+  --cream-soft: #EEDDBB;   /* un cran plus chaud, pour distinguer des blocs sur --cream */
+  --forest:     #0E4F33;
+  --forest-deep:#0B2C1D;
+  --tomato:     #AB1E19;
+  --gold:       #F2B630;
   --gold-soft:  #F7CE6C;
-  --ink:        #1F2A22;
-  --ink-mute:   rgba(31, 42, 34, .62);
-  --ink-faint:  rgba(31, 42, 34, .38);
-  --line:       rgba(31, 42, 34, .12);
-  --line-strong:rgba(31, 42, 34, .22);
+  --ink:        #121210;
+  --ink-mute:   #6B6458;
+  --ink-faint:  rgba(18, 18, 16, .42);
+  --line:       rgba(18, 18, 16, .12);
+  --line-strong:rgba(18, 18, 16, .24);
 
-  --paper:      #FFFDF6;   /* cartes / panneaux légèrement plus clairs que le fond */
+  --paper:      #FBF5E6;   /* cartes / panneaux légèrement plus clairs que le fond */
 
   /* ---- pizza (illustration héros) ---- */
   --crust:      #E3A542;
@@ -31,6 +32,8 @@
 
   /* ---- typographie ---- */
   --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  /* Anton : seulement les grands titres (h1, h2, noms de catégories). */
+  --font-title:   "Anton", "Montserrat", Impact, sans-serif;
   --font-body:    "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --font-script:  "Yellowtail", cursive;
 

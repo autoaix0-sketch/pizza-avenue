@@ -45,7 +45,7 @@
 .hero-garnish { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
 .garnish { position: absolute; }
 .garnish picture { display: contents; }
-.garnish img { width: 100%; height: auto; filter: drop-shadow(0 14px 16px rgba(31, 42, 34, .22)); }
+.garnish img { width: 100%; height: auto; filter: drop-shadow(0 14px 16px rgba(18, 18, 16, .22)); }
 .garnish__float {
   opacity: 0;
   transform: scale(.8);
@@ -101,7 +101,7 @@
      scrubbé ferait traîner l'animation. */
   opacity: 0;
   transition: opacity .7s var(--ease-out);
-  filter: drop-shadow(0 18px 28px rgba(31, 42, 34, .18));
+  filter: drop-shadow(0 18px 28px rgba(18, 18, 16, .18));
 }
 .hero-stage.is-ready .hero-stage__pizza > svg { opacity: 1; }
 
@@ -115,7 +115,7 @@
 .hero-badge svg {
   width: 100%; height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 8px 14px rgba(23, 61, 39, .28));
+  filter: drop-shadow(0 8px 14px rgba(11, 44, 29, .28));
   opacity: 0;
   transform: scale(.7) rotate(-20deg);
   transition: opacity .7s var(--ease-out) .4s, transform .9s var(--spring) .4s;
@@ -155,17 +155,15 @@
 
 /* Le symbole statique n'existe que sans animation : avec, c'est la pizza
    elle-même qui le devient. */
-.hero-stage__mark { display: none; }
-
-.hero-stage__wordmark {
-  width: min(52vmin, 30rem);
+.hero-stage__mascot {
+  width: min(44vmin, 20rem);
   height: auto;
-  overflow: visible;
+  filter: drop-shadow(0 18px 26px rgba(11, 44, 29, .22));
 }
 
 .hero-stage__swash {
   width: min(30vmin, 17rem);
-  margin-top: -.4rem;
+  margin-top: -.2rem;
 }
 .hero-stage__swash path {
   fill: none;
@@ -175,12 +173,11 @@
 }
 
 .hero-stage__tagline {
-  margin: .6rem 0 0;
-  font-size: clamp(.68rem, .3vw + .6rem, .85rem);
-  font-weight: 800;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
+  margin: .5rem 0 0;
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 1rem + 1.8vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--tomato);
 }
 
 /* -------------------------------------------------------------- l'accroche */
@@ -305,7 +302,6 @@
 [data-motion="reduced"] .hero-stage__logo {
   position: relative; left: auto; top: auto; transform: none;
 }
-[data-motion="reduced"] .hero-stage__mark { display: block; width: min(34vmin, 9rem); margin-bottom: .2rem; }
 [data-motion="reduced"] .hero-copy-wrap {
   position: static;
   width: auto;

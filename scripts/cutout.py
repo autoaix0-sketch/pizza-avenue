@@ -13,6 +13,9 @@ Two modes, both deterministic and offline:
   neutral  For a grey/white backdrop, including the fake "transparency"
          checkerboard that stock "PNG" previews bake into a JPG.
 
+  color  For a flat coloured backdrop (e.g. the cream behind the mascot
+         logo): keys out the median border colour, connected to the border.
+
   neutral-round  `neutral`, then an outline fit for round subjects (a
          pizza): clips anything that bulges past the crust, e.g. a baked-in
          shadow that still carries checkerboard.
@@ -56,6 +59,16 @@ def neutral_matte(rgb: np.ndarray) -> np.ndarray:
     chroma = f.max(axis=2) - f.min(axis=2)
     lum = f.mean(axis=2)
     return border_flood((chroma < 12) & (lum > 95))
+
+
+def color_matte(rgb: np.ndarray, tol: float = 30.0) -> np.ndarray:
+    """For a flat coloured backdrop (the cream behind the mascot logo):
+    background = close to the median border colour, connected to the border."""
+    f = rgb.astype(np.float32)
+    border = np.concatenate([f[0], f[-1], f[:, 0], f[:, -1]])
+    ref = np.median(border, axis=0)
+    dist = np.sqrt(((f - ref) ** 2).sum(axis=2))
+    return border_flood(dist < tol)
 
 
 def border_flood(candidate: np.ndarray) -> np.ndarray:
@@ -175,8 +188,8 @@ def finish(im: Image.Image, alpha: Image.Image, out_path: str):
 def main():
     mode, src, dst = sys.argv[1:4]
     im = Image.open(src).convert('RGB')
-    if mode in ('white', 'neutral'):
-        fg = (white_matte if mode == 'white' else neutral_matte)(np.asarray(im))
+    if mode in ('white', 'neutral', 'color'):
+        fg = {'white': white_matte, 'neutral': neutral_matte, 'color': color_matte}[mode](np.asarray(im))
         alpha = Image.fromarray((fg * 255).astype(np.uint8))
         # Pull the edge in by a pixel, then soften it: removes the pale halo
         # a hard white-key leaves around crusts and buns.
@@ -187,7 +200,7 @@ def main():
     elif mode == 'round':
         alpha = mask_from_polygon(im.size, round_outline(im)).filter(ImageFilter.GaussianBlur(0.7))
     else:
-        raise SystemExit(f'unknown mode {mode!r} (white | neutral | neutral-round | round)')
+        raise SystemExit(f'unknown mode {mode!r} (white | neutral | color | neutral-round | round)')
     finish(im, alpha, dst)
 
 

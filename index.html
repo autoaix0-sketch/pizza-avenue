@@ -15,9 +15,10 @@
 <meta property="og:description" content="Bonjour Dax. Ciao la faim. Pâte fraîche, taille unique, menu halal. Commande par téléphone : 09 66 13 03 02.">
 <meta property="og:image" content="/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F8F1DF">
+<meta name="theme-color" content="#F7EBD3">
 
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
 <!--
@@ -125,20 +126,6 @@
         <circle cx="17" cy="19" r="2"/><circle cx="23.5" cy="22" r="1.8"/><circle cx="20" cy="27.5" r="1.4"/>
       </g>
     </symbol>
-    <symbol id="ic-burger" viewBox="0 0 40 40">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M7 17 C 7 10, 13 6, 20 6 C 27 6, 33 10, 33 17 Z"/>
-        <path d="M6 22 H34"/>
-        <path d="M7 26.5 C 10 24.5, 12 28.5, 15 26.5 S 20 24.5, 23 26.5 S 29 28.5, 33 26.5"/>
-        <path d="M8 30.5 H32 C 32 33, 30.5 34.5, 28 34.5 H12 C 9.5 34.5, 8 33, 8 30.5 Z"/>
-      </g>
-    </symbol>
-    <symbol id="ic-taco" viewBox="0 0 40 40">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="6" y="11" width="28" height="18" rx="4"/>
-        <path d="M13 12 L 9 21 M 21 12 L 14 27 M 29 12 L 21 28 M 33 18 L 28 28"/>
-      </g>
-    </symbol>
     <symbol id="ic-texmex" viewBox="0 0 40 40">
       <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 21 H35 L31 33 H9 Z"/>
@@ -160,15 +147,8 @@
 <!-- ======================================================= barre supérieure -->
 <header class="topbar" data-stuck="false">
   <a class="topbar__mark" href="#top" aria-label="Pizza Avenue">
-    <svg class="logo-lockup" viewBox="0 0 260 118" aria-hidden="true">
-      <g class="logo-lockup__mark"><use href="#mark-dome" x="88" y="3" width="84" height="43"/></g>
-      <g class="logo-lockup__ticks" fill="none" stroke-width="3" stroke-linecap="round">
-        <path d="M78 32 L69 25" stroke="var(--forest)"/><path d="M75 43 L64 42" stroke="var(--gold)"/>
-        <path d="M182 32 L191 25" stroke="var(--gold)"/><path d="M185 43 L196 42" stroke="var(--forest)"/>
-      </g>
-      <text class="logo-lockup__word" x="130" y="88" text-anchor="middle" font-family="var(--font-script)" font-size="42" fill="currentColor">Pizza Avenue</text>
-      <path class="logo-lockup__swash" d="M64 104 C 100 96, 150 111, 198 99" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round"/>
-    </svg>
+    <img class="topbar__logo" src="/assets/logo-compact-192.webp" width="56" height="56" alt="">
+    <span class="topbar__name">Pizza Avenue</span>
   </a>
 
   <nav class="topbar__nav" id="siteNav" aria-label="Navigation">
@@ -250,17 +230,16 @@
         </div>
 
         <div class="hero-stage__logo" id="heroLogo" aria-hidden="true">
-          <!-- Symbole statique : visible seulement sans animation
-               (data-motion="reduced"), où la pizza ne se transforme pas. -->
-          <svg class="hero-stage__mark" viewBox="8 8 184 94"><use href="#mark-dome"/></svg>
-          <svg class="hero-stage__wordmark" id="heroWordmark" viewBox="0 0 320 80">
-            <clipPath id="wordmarkClip"><rect id="wordmarkClipRect" x="0" y="0" width="0" height="80"/></clipPath>
-            <text x="8" y="58" font-family="var(--font-script)" font-size="56" fill="var(--forest)" clip-path="url(#wordmarkClip)">Pizza Avenue</text>
-          </svg>
+          <!-- Fin de l'histoire : la pizza se réduit au centre de la mascotte,
+               qui apparaît à sa place (src/js/hero/timeline.js, phase 3). -->
+          <img class="hero-stage__mascot" id="heroMascot"
+               src="/assets/logo-mascot-640.webp"
+               srcset="/assets/logo-mascot-320.webp 320w, /assets/logo-mascot-640.webp 640w"
+               sizes="(max-width: 46rem) 62vw, 24rem" width="640" height="640" alt="">
+          <p class="hero-stage__tagline" id="heroTagline" data-i18n="brand.h">Une faim de caractère.</p>
           <svg class="hero-stage__swash" id="heroSwash" viewBox="0 0 260 30">
             <path id="heroSwashPath" d="M6,18 C 40,6 90,26 130,14 C 170,4 210,22 254,10"/>
           </svg>
-          <p class="hero-stage__tagline" id="heroTagline" data-i18n="brand.h">Une faim de caractère.</p>
         </div>
 
         <div class="hero-copy-wrap">
@@ -446,15 +425,7 @@
   <div class="wrap">
     <div class="footer__grid">
       <p class="footer__brand">
-        <svg class="logo-lockup" viewBox="0 0 260 118" aria-hidden="true">
-          <g class="logo-lockup__mark"><use href="#mark-dome" x="88" y="3" width="84" height="43"/></g>
-          <g class="logo-lockup__ticks" fill="none" stroke-width="3" stroke-linecap="round">
-            <path d="M78 32 L69 25" stroke="var(--forest)"/><path d="M75 43 L64 42" stroke="var(--gold)"/>
-            <path d="M182 32 L191 25" stroke="var(--gold)"/><path d="M185 43 L196 42" stroke="var(--forest)"/>
-          </g>
-          <text class="logo-lockup__word" x="130" y="88" text-anchor="middle" font-family="var(--font-script)" font-size="42" fill="currentColor">Pizza Avenue</text>
-          <path class="logo-lockup__swash" d="M64 104 C 100 96, 150 111, 198 99" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round"/>
-        </svg>
+        <img class="footer__logo" src="/assets/logo-mascot-cream-480.webp" width="480" height="494" alt="Pizza Avenue" loading="lazy">
       </p>
 
       <div>

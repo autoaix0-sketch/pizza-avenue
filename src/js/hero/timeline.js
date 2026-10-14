@@ -28,9 +28,9 @@ export function initHero({ reduced, hasPhoto }) {
   const pizza = document.getElementById('heroPizza');
   const logo = document.getElementById('heroLogo');
   const whole = document.getElementById('pizzaWhole');
-  const wordmarkClip = document.getElementById('wordmarkClipRect');
   const swashPath = document.getElementById('heroSwashPath');
   const tagline = document.getElementById('heroTagline');
+  const mascot = document.getElementById('heroMascot');
   const copy = document.getElementById('heroCopy');
   const scrollHint = document.getElementById('heroScrollHint');
   const badge = document.getElementById('heroBadge');
@@ -47,7 +47,6 @@ export function initHero({ reduced, hasPhoto }) {
   const topPhotos = TOP_SLICES.map(photoOf);
   const topIllos = TOP_SLICES.map(illoOf);
 
-  const wordmarkFullWidth = 320; // largeur du viewBox du wordmark (index.html)
   const swashLength = swashPath ? swashPath.getTotalLength() : 0;
 
   // Sans photo (fichier absent, réseau coupé), la pizza dessinée prend sa
@@ -57,15 +56,14 @@ export function initHero({ reduced, hasPhoto }) {
   gsap.set(allSlicePhotos, { autoAlpha: 0 });
   gsap.set(allIllos, { opacity: hasPhoto ? 0 : 1 });
 
-  if (wordmarkClip) gsap.set(wordmarkClip, { attr: { width: 0 } });
   if (swashPath) gsap.set(swashPath, { strokeDasharray: swashLength, strokeDashoffset: swashLength });
   if (tagline) gsap.set(tagline, { autoAlpha: 0, y: 8 });
+  if (mascot) gsap.set(mascot, { autoAlpha: reduced ? 1 : 0, scale: reduced ? 1 : 0.55 });
 
   if (reduced) {
     gsap.set(garnish, { autoAlpha: 0 });
     // État statique : la pizza entière posée, le lockup complet sous elle
     // (avec son propre symbole, voir .hero-stage__mark).
-    if (wordmarkClip) gsap.set(wordmarkClip, { attr: { width: wordmarkFullWidth } });
     if (swashPath) gsap.set(swashPath, { strokeDashoffset: 0 });
     if (tagline) gsap.set(tagline, { autoAlpha: 1, y: 0 });
     gsap.set(logo, { autoAlpha: 1 });
@@ -89,11 +87,11 @@ export function initHero({ reduced, hasPhoto }) {
       const start = isMobile ? START.mobile : START.desktop;
       const markScale = isMobile ? 0.36 : 0.4;
 
-      // Où poser le centre de la pizza pour que sa moitié haute coiffe le
-      // wordmark : le haut du bloc logo, moins une petite marge. Calculé
-      // sur la mise en page (offsetHeight), pas sur un rect déjà
-      // transformé — juste à toutes les tailles et après un refresh.
-      const markY = () => -logo.offsetHeight / 2 - H() * 0.015;
+      // Où poser le centre de la pizza : au centre de la mascotte, en haut
+      // du bloc logo. Calculé sur la mise en page (offsetHeight), pas sur
+      // un rect déjà transformé — juste à toutes les tailles et après un
+      // refresh.
+      const markY = () => -logo.offsetHeight / 2 + (mascot ? mascot.offsetHeight / 2 : 0);
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -172,7 +170,7 @@ export function initHero({ reduced, hasPhoto }) {
         }, P.fallStart + order * 0.8);
       });
 
-      // La moitié haute se réduit, se redresse et monte coiffer le wordmark.
+      // La moitié haute se réduit, se redresse et monte au centre de la mascotte.
       tl.to(pizza, {
         scale: markScale,
         x: 0,
@@ -190,11 +188,15 @@ export function initHero({ reduced, hasPhoto }) {
 
       tl.to(glow, { opacity: 0, duration: 8 }, P.fallStart + 4);
 
-      // ---- Phase 4 — le lockup se révèle -------------------------------
-      tl.to(logo, { autoAlpha: 1, duration: 4 }, P.wordmarkStart - 2);
-      if (wordmarkClip) {
-        tl.to(wordmarkClip, { attr: { width: wordmarkFullWidth }, duration: P.wordmarkEnd - P.wordmarkStart, ease: 'power1.inOut' }, P.wordmarkStart);
+      // La mascotte apparaît là où la pizza se pose, et la pizza s'efface
+      // en elle : les parts « deviennent » le logo.
+      tl.to(logo, { autoAlpha: 1, duration: 2 }, P.crossStart);
+      if (mascot) {
+        tl.to(mascot, { autoAlpha: 1, scale: 1, duration: P.markSettle - P.crossStart, ease: 'back.out(1.6)' }, P.crossStart);
       }
+      tl.to(pizza, { autoAlpha: 0, duration: P.markSettle - P.crossStart - 2 }, P.crossStart + 2);
+
+      // ---- Phase 4 — le lockup se révèle -------------------------------
       if (swashPath) {
         tl.to(swashPath, { strokeDashoffset: 0, duration: P.swashEnd - P.swashStart, ease: 'power1.out' }, P.swashStart);
       }
@@ -208,8 +210,7 @@ export function initHero({ reduced, hasPhoto }) {
       // scène, voir .brand-moment dans sections.css) arrive par le bas.
       const lift = () => H() * (isMobile ? 0.16 : 0.2);
       const park = { duration: P.parkEnd - P.parkStart, ease: 'power2.inOut' };
-      tl.to(pizza, { scale: markScale * 0.6, y: () => markY() - lift(), opacity: 0.2, ...park }, P.parkStart)
-        .to(logo, { scale: 0.6, y: () => -lift(), opacity: 0.2, ...park }, P.parkStart)
+      tl.to(logo, { scale: 0.6, y: () => -lift(), opacity: 0.2, ...park }, P.parkStart)
         // Un temps de pause, filigrane posé, pendant que la section
         // suivante finit d'entrer.
         .to({}, { duration: 100 - P.parkEnd }, P.parkEnd);

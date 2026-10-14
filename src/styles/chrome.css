@@ -28,7 +28,10 @@
 /* Le logo complet — symbole, nom en script, trait doré — comme sur le
    brand board, à toutes les tailles d'écran. Il se dessine au chargement
    (le trait balaie, le symbole se pose) et réagit au survol. */
-.topbar__mark { display: flex; align-items: center; }
+.topbar__mark { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--forest); }
+.topbar__logo { width: clamp(2.9rem, 2.5rem + 1vw, 3.5rem); height: auto; border-radius: 50%; transition: transform var(--dur) var(--spring); }
+.topbar__mark:hover .topbar__logo { transform: rotate(-8deg); }
+.topbar__name { font-family: var(--font-script); font-size: clamp(1.35rem, 1.1rem + .8vw, 1.8rem); line-height: 1; white-space: nowrap; }
 .logo-lockup { display: block; height: clamp(3rem, 2.6rem + 1vw, 3.6rem); width: auto; color: var(--forest); overflow: visible; }
 .logo-lockup__mark { transform-box: fill-box; transform-origin: 50% 100%; transition: transform var(--dur) var(--spring); }
 .logo-lockup__swash { stroke-dasharray: 150; stroke-dashoffset: 0; }
@@ -118,7 +121,7 @@
     padding: .6rem var(--gutter) 1.4rem;
     background: var(--cream);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 24px 40px -28px rgba(31, 42, 34, .35);
+    box-shadow: 0 24px 40px -28px rgba(18, 18, 16, .35);
     font-size: 1.6rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -169,7 +172,7 @@
   border-bottom: 1px solid rgba(248, 241, 223, .18);
 }
 .footer__brand { margin: 0; }
-.footer__brand .logo-lockup { height: 5rem; color: var(--cream); }
+.footer__logo { width: clamp(8rem, 6rem + 6vw, 11rem); height: auto; }
 .footer p { margin: 0 0 .35rem; color: rgba(248, 241, 223, .82); }
 .footer b { color: var(--cream); }
 .footer__tagline { font-family: var(--font-script); font-size: 1.4rem; color: var(--gold-soft); }

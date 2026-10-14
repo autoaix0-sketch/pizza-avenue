@@ -78,7 +78,7 @@
   background: var(--forest);
   color: var(--cream);
   transform: rotate(-2deg);
-  box-shadow: 0 18px 30px -22px rgba(23, 61, 39, .6);
+  box-shadow: 0 18px 30px -22px rgba(11, 44, 29, .6);
 }
 .marquee__track {
   display: flex;
@@ -155,8 +155,8 @@
 }
 .menu-row__title { display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
 .menu-row__name {
-  font-family: var(--font-display);
-  font-weight: 800;
+  font-family: var(--font-title);
+  font-weight: 400;
   text-transform: uppercase;
   font-size: clamp(1.8rem, 1rem + 3.4vw, 3.8rem);
   line-height: 1;
@@ -184,7 +184,7 @@
   transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease);
 }
 .menu-row__toggle:hover .menu-row__art::before { transform: scale(1.08); background: var(--gold-soft); }
-.menu-row__art img { filter: drop-shadow(0 12px 12px rgba(31, 42, 34, .18)); }
+.menu-row__art img { filter: drop-shadow(0 12px 12px rgba(18, 18, 16, .18)); }
 .menu-row__toggle:hover .menu-row__art { transform: scale(1.07) rotate(-5deg); }
 .menu-row__art picture { display: contents; }
 .menu-row__art img { width: 100%; height: 100%; object-fit: contain; }
@@ -304,12 +304,12 @@
   padding: var(--pad);
   background: var(--bg);
   color: var(--ink);
-  box-shadow: 0 40px 70px -48px rgba(31, 42, 34, .55);
+  box-shadow: 0 40px 70px -48px rgba(18, 18, 16, .55);
 }
-.poster--forest { --bg: #245B3A; --ink: #F8F1DF; --accent: #F7CE6C; --sticker-bg: #F2B632; --sticker-ink: #1F2A22; --glow: rgba(242, 182, 50, .28); }
-.poster--tomato { --bg: #D94B32; --ink: #FFF6E6; --accent: #FBD98A; --sticker-bg: #F8F1DF; --sticker-ink: #245B3A; --glow: rgba(255, 220, 160, .34); }
-.poster--gold   { --bg: #F2B632; --ink: #1F2A22; --accent: #245B3A; --sticker-bg: #245B3A; --sticker-ink: #F8F1DF; --glow: rgba(255, 250, 235, .55); }
-.poster--cream  { --bg: #F1E7CC; --ink: #1F2A22; --accent: #D94B32; --sticker-bg: #D94B32; --sticker-ink: #FFF6E6; --glow: rgba(242, 182, 50, .38); }
+.poster--forest { --bg: #0E4F33; --ink: #F7EBD3; --accent: #F7CE6C; --sticker-bg: #F2B630; --sticker-ink: #121210; --glow: rgba(242, 182, 50, .28); }
+.poster--tomato { --bg: #AB1E19; --ink: #FFF6E6; --accent: #FBD98A; --sticker-bg: #F7EBD3; --sticker-ink: #0E4F33; --glow: rgba(255, 220, 160, .34); }
+.poster--gold   { --bg: #F2B630; --ink: #121210; --accent: #0E4F33; --sticker-bg: #0E4F33; --sticker-ink: #F7EBD3; --glow: rgba(255, 250, 235, .55); }
+.poster--cream  { --bg: #EEDDBB; --ink: #121210; --accent: #AB1E19; --sticker-bg: #AB1E19; --sticker-ink: #FFF6E6; --glow: rgba(242, 182, 50, .38); }
 
 /* La lumière : un halo derrière le plat, comme un projecteur. */
 .poster::before {
