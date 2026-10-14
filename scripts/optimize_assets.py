@@ -8,9 +8,9 @@ Turns the image slots in `images/` into web-ready AVIF + WebP in
 src/js/utils.js reads, so every <picture> ships its real width/height and
 nothing shifts while loading.
 
-The slots are fixed filenames (see docs/IMAGE-PROMPTS.md):
+The slots are fixed filenames (see images/SOURCES.md):
 
-    images/hero_pizza.png   images/cat_*.png   images/sig_*.png
+    images/hero_pizza.png   images/cat_*.png   images/garnish_*.png
     images/maison_scene.jpg
 
 Drop a new file in with the same name, rerun this script, and it is live.

@@ -67,7 +67,8 @@ window.PIZZA_AVENUE_MENU = {
           id: 'speciales',
           label: T('Nos spéciales ★', 'Especiales ★', 'Our specials ★'),
           items: [
-            { num: 19, name: 'Dax-oise', price: 12.0, special: true, note: T('tomate, mozzarella, viande hachée, merguez, poivrons, oignons, œuf', 'tomate, mozzarella, carne picada, merguez, pimientos, cebolla, huevo', 'tomato, mozzarella, minced beef, merguez, peppers, onions, egg') },
+            /* « Dacquoise » : nom choisi par le propriétaire (la source écrit « Dax-oise »). */
+            { num: 19, name: 'Dacquoise', price: 12.0, special: true, note: T('tomate, mozzarella, viande hachée, merguez, poivrons, oignons, œuf', 'tomate, mozzarella, carne picada, merguez, pimientos, cebolla, huevo', 'tomato, mozzarella, minced beef, merguez, peppers, onions, egg') },
             { num: 20, name: 'Campagnarde', price: 12.0, special: true, note: T('crème fraîche, mozzarella, viande hachée, pommes de terre, oignons', 'nata, mozzarella, carne picada, patatas, cebolla', 'crème fraîche, mozzarella, minced beef, potatoes, onions') }
           ]
         }

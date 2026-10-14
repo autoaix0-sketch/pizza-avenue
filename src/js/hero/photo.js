@@ -37,10 +37,17 @@ export function loadHeroPhoto() {
   const img = new Image();
   img.decoding = 'async';
   img.fetchPriority = 'high';
-  img.src = url;
 
-  const decoded = img.decode ? img.decode() : new Promise((res) => { img.onload = res; });
-  return decoded
+  /* decode() peut rester en attente pour toujours (onglet en arrière-plan,
+     certains navigateurs intégrés) alors que l'image est chargée : toute la
+     page attendrait. On part donc dès que l'image est décodée OU chargée,
+     et au plus tard après 3 s. */
+  const loaded = new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+  img.src = url;
+  const decoded = img.decode ? img.decode() : loaded;
+  const timeout = new Promise((res) => setTimeout(res, 3000));
+
+  return Promise.race([decoded, loaded, timeout])
     .then(() => {
       document.querySelectorAll('#heroPizza .pizza-photo').forEach((el) => el.setAttribute('href', url));
       return url;

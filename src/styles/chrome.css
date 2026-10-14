@@ -15,6 +15,9 @@
   font-size: .82rem; font-weight: 600; text-align: center;
 }
 .openbar a { color: var(--gold); font-weight: 800; }
+/* Petit écran : une seule ligne (« Ouverture prochaine. @pizzavenue40100 »). */
+@media (max-width: 34rem) { .openbar__follow { display: none; } }
+@media (max-width: 30rem) { .topbar__name { display: none; } }
 
 .topbar {
   position: fixed;

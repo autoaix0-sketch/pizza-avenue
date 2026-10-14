@@ -19,7 +19,8 @@ export const STRINGS = {
     'nav.close': 'Fermer',
     'price.from': 'dès',
 
-    'banner.text': 'Ouverture prochaine. Suivez-nous sur Instagram',
+    'banner.text': 'Ouverture prochaine.',
+    'banner.follow': 'Suivez-nous sur Instagram',
 
     'hero.kicker': 'Pizzeria halal · À emporter · Dax',
     'hero.t1': 'Bonjour Dax.',
@@ -112,7 +113,8 @@ export const STRINGS = {
     'nav.close': 'Cerrar',
     'price.from': 'desde',
 
-    'banner.text': 'Próxima apertura. Síguenos en Instagram',
+    'banner.text': 'Próxima apertura.',
+    'banner.follow': 'Síguenos en Instagram',
 
     'hero.kicker': 'Pizzería halal · Para llevar · Dax',
     'hero.t1': 'Bonjour Dax.',
@@ -205,7 +207,8 @@ export const STRINGS = {
     'nav.close': 'Close',
     'price.from': 'from',
 
-    'banner.text': 'Opening soon. Follow us on Instagram',
+    'banner.text': 'Opening soon.',
+    'banner.follow': 'Follow us on Instagram',
 
     'hero.kicker': 'Halal pizzeria · Takeaway · Dax',
     'hero.t1': 'Bonjour Dax.',

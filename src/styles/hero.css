@@ -23,7 +23,8 @@
 
 .hero-stage {
   position: absolute;
-  inset: 0;
+  /* sous le bandeau « Ouverture prochaine » quand il est affiché */
+  inset: var(--banner-h, 0px) 0 0 0;
 }
 
 .hero-stage__glow {
