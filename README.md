@@ -36,4 +36,11 @@ infos légales).
 
 ## En ligne
 
-Pas encore en ligne. Ne pas publier sans l'accord du propriétaire.
+Version de présentation pour le client sur Vercel (projet `avenue-pizza`),
+déployée avec `vercel deploy --prod --yes` depuis ce dossier.
+
+**Avant le vrai lancement** :
+- retirer l'en-tête `X-Robots-Tag: noindex` de `vercel.json` (il cache le site à Google
+  tant que les infos ne sont pas confirmées) ;
+- ajouter `<link rel="canonical">` dans `index.html` avec le nom de domaine final ;
+- compléter les `TODO-OWNER` (horaires, date d'ouverture, mentions légales).
