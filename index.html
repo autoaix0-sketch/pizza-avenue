@@ -6,7 +6,7 @@
 
 <title>Pizza Avenue — Pizzeria halal à emporter à Dax</title>
 <meta name="description" content="Pizza Avenue, pizzeria halal à emporter à Dax : 20 pizzas à pâte fraîche (taille unique, de 8 à 12 €), calzone, panizza, makloub, kapsalon, tex-mex. 75 av. Saint-Vincent de Paul. 09 66 13 03 02.">
-<link rel="canonical" href="https://pizza-avenue.example/">
+<!-- TODO-OWNER — ajouter <link rel="canonical"> quand le nom de domaine sera choisi. -->
 
 <meta property="og:type" content="restaurant">
 <meta property="og:site_name" content="Pizza Avenue">
@@ -22,22 +22,34 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
 <!--
-  TODO-OWNER — Pizza Avenue est une marque concept : les coordonnées
-  ci-dessous (src/data/site.js) sont des placeholders. Ne pas publier ce
-  balisage tel quel sans les remplacer par les vraies informations de
-  l'établissement. Volontairement SANS aggregateRating tant que les avis
-  ne sont pas réels (voir la note dans index.html de Taco Naan pour le
-  raisonnement : un balisage d'avis auto-déclaré est contraire aux
-  consignes de Google).
+  Fiche Restaurant (schema.org). La base ci-dessous (nom, adresse, téléphone)
+  est complétée au chargement par src/js/seo.js depuis src/data/site.js et
+  src/data/menu.js (carte et prix, horaires quand ils existent) : une seule
+  source pour les prix. Volontairement SANS aggregateRating tant qu'il n'y a
+  pas de vrais avis.
 -->
-<script type="application/ld+json">
+<script type="application/ld+json" id="restaurantLd">
 {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "name": "Pizza Avenue",
-  "servesCuisine": ["Pizza", "Burgers", "Tacos", "Tex-Mex"],
-  "priceRange": "€€",
-  "currenciesAccepted": "EUR"
+  "description": "Pizzeria halal à emporter à Dax. Pâte fraîche, taille unique.",
+  "servesCuisine": ["Pizza", "Halal"],
+  "priceRange": "€",
+  "currenciesAccepted": "EUR",
+  "telephone": "+33 9 66 13 03 02",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "75 Av. Saint-Vincent de Paul",
+    "postalCode": "40100",
+    "addressLocality": "Dax",
+    "addressRegion": "Landes",
+    "addressCountry": "FR"
+  },
+  "hasMap": "https://maps.app.goo.gl/1YcMSX9xrhdtXAe47",
+  "sameAs": ["https://www.instagram.com/pizzavenue40100/"],
+  "image": "/assets/og.jpg",
+  "acceptsReservations": false
 }
 </script>
 </head>
@@ -144,6 +156,13 @@
   </defs>
 </svg>
 
+<!-- Bandeau « Ouverture prochaine » : affiché si openingSoon = true dans
+     src/data/site.js (voir src/js/venir.js: renderBanner). -->
+<div class="openbar" id="openBanner" hidden>
+  <span data-i18n="banner.text">Ouverture prochaine. Suivez-nous sur Instagram</span>
+  <a id="openBannerLink" href="https://www.instagram.com/pizzavenue40100/" target="_blank" rel="noopener">@pizzavenue40100</a>
+</div>
+
 <!-- ======================================================= barre supérieure -->
 <header class="topbar" data-stuck="false">
   <a class="topbar__mark" href="#top" aria-label="Pizza Avenue">
@@ -165,7 +184,7 @@
       <button type="button" data-lang="es" aria-pressed="false">ES</button>
       <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <a class="btn btn--sm topbar__cta" href="#venir">
+    <a class="btn btn--sm topbar__cta" href="tel:+33966130302" data-order>
       <span data-i18n="nav.call">Commander</span>
     </a>
     <button class="navtoggle" type="button" aria-expanded="false" aria-controls="siteNav">
@@ -251,7 +270,10 @@
               <span class="hero-copy__sub" data-i18n="hero.t3">Pizzas à emporter.</span>
             </h1>
             <p class="hero-copy__lede" data-i18n-html="hero.lede">Pâte fraîche, taille unique, menu halal. <strong>75 av. Saint-Vincent de Paul, Dax.</strong></p>
-            <a class="btn" href="#menu"><span data-i18n="hero.cta">Voir la carte</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+            <div class="hero-copy__ctas">
+              <a class="btn" href="tel:+33966130302" data-order><span data-i18n="hero.call">Appeler</span>&nbsp;<span data-phone>09 66 13 03 02</span></a>
+              <a class="btn btn--ghost" href="#menu"><span data-i18n="hero.cta">Voir la carte</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+            </div>
           </div>
         </div>
 
@@ -414,7 +436,7 @@
     <p class="eyebrow"><span data-i18n="cta.eyebrow">Pour finir</span></p>
     <h2><span class="script" data-i18n="cta.h2">On se voit sur l’avenue.</span></h2>
     <p data-i18n="cta.p">Appelez, passez, repartez avec.</p>
-    <a class="btn" id="ctaOrder" href="#venir"><span data-i18n="cta.order">Commander par téléphone</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+    <a class="btn" id="ctaOrder" href="tel:+33966130302" data-order><span data-i18n="cta.order">Commander par téléphone</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
     <div class="cta__pizza" id="ctaPizza" aria-hidden="true"></div>
     <svg class="cta__road" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><use href="#road-path"/></svg>
   </section>
@@ -442,14 +464,26 @@
 
     <p class="footer__legal">
       <span data-i18n="foot.legal">© 2026 Pizza Avenue · Dax</span>
+      · <a href="/mentions-legales.html" data-i18n="foot.mentions">Mentions légales</a>
     </p>
   </div>
 </footer>
 
-<div class="callbar" data-show="false">
-  <span class="status" data-status></span>
-  <a class="btn btn--sm" href="#venir"><span data-i18n="nav.call">Commander</span></a>
-</div>
+<!-- Barre d'actions mobile, toujours visible sous 48rem (pouce). -->
+<nav class="callbar" aria-label="Actions rapides">
+  <a class="callbar__btn callbar__btn--call" href="tel:+33966130302" data-order>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg>
+    <span data-i18n="bar.call">Appeler</span>
+  </a>
+  <a class="callbar__btn" id="barRoute" href="https://maps.app.goo.gl/1YcMSX9xrhdtXAe47" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 40" aria-hidden="true"><use href="#ic-pin"/></svg>
+    <span data-i18n="bar.route">Itinéraire</span>
+  </a>
+  <a class="callbar__btn" href="#menu">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-pizza"/></svg>
+    <span data-i18n="bar.menu">La carte</span>
+  </a>
+</nav>
 
 <script type="module" src="/src/main.js"></script>
 </body>

@@ -50,8 +50,31 @@ export function renderContact() {
     footLinks.innerHTML = links.join('');
   }
 
-  const ctaOrder = document.getElementById('ctaOrder');
-  if (ctaOrder && site.links.orderOnline) ctaOrder.href = site.links.orderOnline;
+  /* Chaque bouton « Commander » / « Appeler » : le téléphone (ou un lien de
+     commande en ligne s'il est renseigné dans site.js). */
+  const orderHref = site.links.orderOnline || 'tel:' + site.phone.link;
+  document.querySelectorAll('[data-order]').forEach((a) => { a.href = orderHref; });
+  document.querySelectorAll('[data-phone]').forEach((el) => { el.textContent = site.phone.human; });
+
+  const barRoute = document.getElementById('barRoute');
+  if (barRoute && routeEl) barRoute.href = routeEl.href;
+
+  renderBanner(site);
+}
+
+/* Bandeau « Ouverture prochaine » (site.openingSoon). La barre du haut se
+   pose dessous grâce à --banner-h. */
+function renderBanner(site) {
+  const banner = document.getElementById('openBanner');
+  if (!banner) return;
+  banner.hidden = !site.openingSoon;
+  const link = document.getElementById('openBannerLink');
+  if (link && site.links.instagram) link.href = site.links.instagram;
+  const setHeight = () => {
+    document.documentElement.style.setProperty('--banner-h', banner.hidden ? '0px' : banner.offsetHeight + 'px');
+  };
+  setHeight();
+  addEventListener('resize', setHeight, { passive: true });
 }
 
 export function wireMap() {

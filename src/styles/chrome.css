@@ -5,9 +5,20 @@
 /* Fixe et transparente au-dessus du héros plein écran : le héros occupe
    tout l'écran dès le premier regard, la barre prend un fond crème dès
    qu'on défile (data-stuck, voir sections.js). */
+/* Bandeau « Ouverture prochaine » : fixé tout en haut, la barre se pose
+   juste dessous (--banner-h, posé par src/js/venir.js). */
+.openbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem .5rem;
+  padding: .45rem var(--gutter);
+  background: var(--forest); color: var(--cream);
+  font-size: .82rem; font-weight: 600; text-align: center;
+}
+.openbar a { color: var(--gold); font-weight: 800; }
+
 .topbar {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: var(--banner-h, 0px); left: 0; right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -19,7 +30,7 @@
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), padding var(--dur) var(--ease);
 }
 .topbar[data-stuck="true"] {
-  background: rgba(248, 241, 223, .92);
+  background: rgba(247, 235, 211, .92);
   backdrop-filter: blur(10px);
   border-bottom-color: var(--line);
   padding-block: .6rem;
@@ -191,16 +202,23 @@
 
 /* -------------------------------------------------------- barre d'appel */
 
+/* Barre d'actions mobile : Appeler / Itinéraire / La carte, toujours là. */
 .callbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 150;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 1rem;
-  padding: .8rem var(--gutter);
-  background: rgba(248, 241, 223, .95);
+  display: grid; grid-template-columns: 1.3fr 1fr 1fr;
+  gap: .5rem;
+  padding: .55rem var(--gutter) calc(.55rem + env(safe-area-inset-bottom));
+  background: rgba(247, 235, 211, .96);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--line);
-  transform: translateY(100%);
-  transition: transform var(--dur) var(--ease-out);
 }
-.callbar[data-show="true"] { transform: translateY(0); }
-@media (min-width: 60rem) { .callbar { display: none; } }
+.callbar__btn {
+  display: flex; align-items: center; justify-content: center; gap: .45rem;
+  min-height: 48px; padding: .4rem .6rem;
+  border-radius: 999px; border: 1.5px solid var(--forest);
+  color: var(--forest); font-weight: 800; font-size: .88rem; text-decoration: none;
+}
+.callbar__btn svg { width: 1.15rem; height: 1.15rem; flex: none; }
+.callbar__btn--call { background: var(--forest); color: var(--cream); }
+@media (max-width: 47.99rem) { body { padding-bottom: calc(4.4rem + env(safe-area-inset-bottom)); } }
+@media (min-width: 48rem) { .callbar { display: none; } }

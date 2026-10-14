@@ -21,6 +21,7 @@ import { renderContact, wireMap } from './js/venir.js';
 import { renderPosters } from './js/posters.js';
 import { initReveals, initNavScrim, initReviewsVisibility, numberSections, initMobileNav } from './js/sections.js';
 import { initHero } from './js/hero/timeline.js';
+import { enrichRestaurantLd } from './js/seo.js';
 import { loadHeroPhoto } from './js/hero/photo.js';
 
 // Le téléchargement de la photo du héros part dès l'évaluation du module,
@@ -57,6 +58,7 @@ function boot(photoUrl) {
   initReviewsVisibility();
   numberSections();
   renderContact();
+  enrichRestaurantLd();
 
   applyLanguage(initialLanguage(), reviewCount);
   initHero({ reduced, hasPhoto: !!photoUrl });

@@ -155,6 +155,10 @@
 
 /* Le symbole statique n'existe que sans animation : avec, c'est la pizza
    elle-même qui le devient. */
+/* Avant le démarrage (polices + photo), la mascotte ne doit pas se poser
+   par-dessus la pizza : le bloc logo attend .is-ready. */
+.hero-stage:not(.is-ready) .hero-stage__logo { visibility: hidden; }
+
 .hero-stage__mascot {
   width: min(44vmin, 20rem);
   height: auto;
@@ -181,6 +185,8 @@
 }
 
 /* -------------------------------------------------------------- l'accroche */
+
+.hero-copy__ctas { display: flex; flex-wrap: wrap; gap: .7rem; }
 
 .hero-copy-wrap {
   position: absolute;

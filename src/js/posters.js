@@ -47,6 +47,12 @@ function shot(s, altText) {
     '</div>';
 }
 
+function orderHref() {
+  const site = window.PIZZA_AVENUE_SITE;
+  if (!site) return '#venir';
+  return site.links.orderOnline || 'tel:' + site.phone.link;
+}
+
 export function renderPosters() {
   const menu = window.PIZZA_AVENUE_MENU;
   const host = document.querySelector('.posters');
@@ -68,7 +74,7 @@ export function renderPosters() {
         '</div>' +
         '<footer class="poster__foot">' +
           `<p>${escapeHtml(pick(c.includes))}</p>` +
-          `<a class="poster__cta" href="#venir">${escapeHtml(t('poster.order'))}` +
+          `<a class="poster__cta" href="${escapeHtml(orderHref())}">${escapeHtml(t('poster.order'))}` +
             '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>' +
         '</footer>' +
       '</article>'

@@ -29,15 +29,10 @@ export function initReveals() {
 
 export function initNavScrim() {
   const topbar = document.querySelector('.topbar');
-  const callbar = document.querySelector('.callbar');
-  const hero = document.querySelector('.hero');
   if (!topbar) return;
 
   function onScroll() {
     topbar.setAttribute('data-stuck', String(window.scrollY > 24));
-    if (callbar && hero) {
-      callbar.setAttribute('data-show', String(window.scrollY > hero.offsetHeight * 0.6));
-    }
   }
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();

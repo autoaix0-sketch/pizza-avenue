@@ -1,0 +1,19 @@
+/* Page « Mentions légales » */
+
+.legal__top {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+.legal__main { max-width: 46rem; padding-block: clamp(2rem, 5vw, 4rem) 4rem; }
+.legal__main h1 { font-size: var(--fs-h2); margin-bottom: 1.5rem; color: var(--forest); }
+.legal__main .legal__h1-2 { margin-top: 3rem; }
+.legal__main h2 {
+  font-family: var(--font-display); font-weight: 800; font-size: 1rem;
+  letter-spacing: .1em; margin: 2rem 0 .6rem; color: var(--tomato);
+}
+.legal__main ul { padding-left: 1.2rem; }
+.legal__main li { margin-bottom: .7rem; }
+.legal__main a { color: var(--forest); }
+.legal__main mark { background: var(--gold); color: var(--ink); padding: 0 .2em; border-radius: 3px; }
+.legal__date { color: var(--ink-mute); font-size: .9rem; margin-top: 2rem; }
