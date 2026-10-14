@@ -1,0 +1,203 @@
+/* =========================================================================
+   PIZZA AVENUE — barre supérieure, pied de page, barre d'appel mobile
+   ========================================================================= */
+
+/* Fixe et transparente au-dessus du héros plein écran : le héros occupe
+   tout l'écran dès le premier regard, la barre prend un fond crème dès
+   qu'on défile (data-stuck, voir sections.js). */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--gutter);
+  background: rgba(248, 241, 223, 0);
+  border-bottom: 1px solid transparent;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), padding var(--dur) var(--ease);
+}
+.topbar[data-stuck="true"] {
+  background: rgba(248, 241, 223, .92);
+  backdrop-filter: blur(10px);
+  border-bottom-color: var(--line);
+  padding-block: .6rem;
+}
+
+/* Le logo complet — symbole, nom en script, trait doré — comme sur le
+   brand board, à toutes les tailles d'écran. Il se dessine au chargement
+   (le trait balaie, le symbole se pose) et réagit au survol. */
+.topbar__mark { display: flex; align-items: center; }
+.logo-lockup { display: block; height: clamp(3rem, 2.6rem + 1vw, 3.6rem); width: auto; color: var(--forest); overflow: visible; }
+.logo-lockup__mark { transform-box: fill-box; transform-origin: 50% 100%; transition: transform var(--dur) var(--spring); }
+.logo-lockup__swash { stroke-dasharray: 150; stroke-dashoffset: 0; }
+.topbar__mark:hover .logo-lockup__mark { transform: rotate(-9deg) translateY(-1px); }
+.topbar__mark:hover .logo-lockup__swash { animation: swash-draw .7s var(--ease-out); }
+
+.topbar .logo-lockup__mark { animation: mark-drop .9s var(--spring) .15s both; }
+.topbar .logo-lockup__swash { animation: swash-draw 1s var(--ease-out) .45s both; }
+.topbar .logo-lockup__ticks { animation: ticks-in .5s var(--ease-out) .9s both; }
+
+@keyframes mark-drop {
+  from { transform: translateY(-14px) rotate(-18deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes swash-draw {
+  from { stroke-dashoffset: 150; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ticks-in {
+  from { opacity: 0; transform: scale(.6); }
+  to { opacity: 1; transform: none; }
+}
+.logo-lockup__ticks { transform-box: fill-box; transform-origin: center; }
+
+.topbar__nav {
+  display: flex;
+  gap: clamp(1.1rem, 2vw, 2rem);
+  font-weight: 700;
+  font-size: .92rem;
+  letter-spacing: .02em;
+}
+.topbar__nav a { position: relative; padding-block: .2rem; }
+.topbar__nav a::after {
+  content: "";
+  position: absolute; left: 0; right: 100%; bottom: -2px;
+  height: 2px; background: var(--tomato);
+  transition: right var(--dur-fast) var(--ease-out);
+}
+.topbar__nav a:hover::after { right: 0; }
+
+.topbar__end { display: flex; align-items: center; gap: .9rem; }
+
+/* ---------------------------------------------------------- nav mobile */
+
+.navtoggle { display: none; }
+
+@media (max-width: 60rem) {
+  .navtoggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .55rem .9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .navtoggle__bars,
+  .navtoggle__bars::before,
+  .navtoggle__bars::after {
+    display: block;
+    width: 1rem; height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast);
+  }
+  .navtoggle__bars { position: relative; }
+  .navtoggle__bars::before, .navtoggle__bars::after { content: ""; position: absolute; left: 0; }
+  .navtoggle__bars::before { top: -5px; }
+  .navtoggle__bars::after { top: 5px; }
+  .is-nav-open .navtoggle__bars { background: transparent; }
+  .is-nav-open .navtoggle__bars::before { transform: translateY(5px) rotate(45deg); }
+  .is-nav-open .navtoggle__bars::after { transform: translateY(-5px) rotate(-45deg); }
+
+  /* Le panneau : sous la barre, pleine largeur, gros liens. */
+  .topbar__nav {
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: .6rem var(--gutter) 1.4rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 24px 40px -28px rgba(31, 42, 34, .35);
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+  }
+  .topbar__nav a { padding-block: .7rem; border-bottom: 1px solid var(--line); }
+  .topbar__nav a::after { display: none; }
+  .is-nav-open .topbar__nav {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .is-nav-open { background: var(--cream); }
+}
+
+/* Petits écrans : le bouton Commander passe dans la barre d'appel du bas,
+   la langue et le menu restent en haut. */
+@media (max-width: 40rem) {
+  .topbar__cta { display: none; }
+  .topbar__end { gap: .45rem; }
+  .lang button { padding: .3rem .45rem; }
+  .navtoggle__label { display: none; }
+  .navtoggle { padding: .7rem .75rem; }
+}
+
+.lang { display: flex; gap: .3rem; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: .2rem; }
+.lang button {
+  border: 0; background: transparent; padding: .3rem .6rem; border-radius: 999px;
+  font-size: .72rem; font-weight: 800; letter-spacing: .04em; color: var(--ink-mute);
+  cursor: pointer; transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.lang button[aria-pressed="true"] { background: var(--forest); color: var(--cream); }
+
+/* ------------------------------------------------------------------ footer */
+
+.footer { background: var(--forest); color: var(--cream); padding-block: clamp(3rem, 5vw, 5rem) 2rem; }
+.footer__grid {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(248, 241, 223, .18);
+}
+.footer__brand { margin: 0; }
+.footer__brand .logo-lockup { height: 5rem; color: var(--cream); }
+.footer p { margin: 0 0 .35rem; color: rgba(248, 241, 223, .82); }
+.footer b { color: var(--cream); }
+.footer__tagline { font-family: var(--font-script); font-size: 1.4rem; color: var(--gold-soft); }
+.footer__phone a { font-weight: 800; font-size: 1.15rem; color: var(--gold-soft); }
+.footer__links { display: flex; gap: 1rem; margin-top: .6rem; }
+.footer__links a { text-decoration: underline; text-underline-offset: 3px; }
+
+.footer__legal {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+  padding-top: 1.2rem; font-size: .8rem; color: rgba(248, 241, 223, .6);
+}
+
+@media (max-width: 40rem) {
+  .footer__grid { grid-template-columns: 1fr; }
+}
+
+/* -------------------------------------------------------- barre d'appel */
+
+.callbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 150;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem;
+  padding: .8rem var(--gutter);
+  background: rgba(248, 241, 223, .95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  transform: translateY(100%);
+  transition: transform var(--dur) var(--ease-out);
+}
+.callbar[data-show="true"] { transform: translateY(0); }
+@media (min-width: 60rem) { .callbar { display: none; } }

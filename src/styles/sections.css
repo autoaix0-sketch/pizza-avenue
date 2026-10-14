@@ -1,0 +1,568 @@
+/* =========================================================================
+   PIZZA AVENUE — sections après le héros
+   =========================================================================
+   Rythme des fonds, en alternance : crème / crème chaude, puis le vert de
+   l'appel final. Pas de cartes à bordure : les plats flottent sur le fond,
+   la typographie fait la structure.
+   ========================================================================= */
+
+/* ---------------------------------------------------------- brand moment */
+
+.brand-moment {
+  position: relative;
+  overflow: clip;
+  background: var(--cream);
+  padding-block: clamp(4rem, 7vw, 7rem);
+  text-align: center;
+}
+
+/* Avec l'animation, la section remonte sous la scène du héros : elle entre
+   pendant que le logo se range en filigrane, et son fond opaque (après un
+   dégradé transparent) le recouvre ensuite. Sans animation, elle suit
+   simplement le héros. */
+[data-motion="full"] .brand-moment {
+  z-index: 2;
+  margin-top: -45svh;
+  padding-top: clamp(3rem, 6vw, 5rem);
+  background: linear-gradient(to bottom, rgba(248, 241, 223, 0) 0, var(--cream) 14rem);
+}
+@media (max-width: 46rem) {
+  [data-motion="full"] .brand-moment { margin-top: -32svh; }
+}
+
+.brand-moment__title {
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 4.4rem);
+  margin: 0 0 .6rem;
+}
+.brand-moment p {
+  max-width: 34rem;
+  margin-inline: auto;
+  color: var(--ink-mute);
+  font-size: 1.1rem;
+}
+.brand-moment__badges {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.6rem, 5vw, 4rem);
+  flex-wrap: wrap;
+}
+.brand-moment__badge {
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  font-size: .76rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--forest);
+}
+.brand-moment__badge svg {
+  width: 2.6rem; height: 2.6rem; color: var(--tomato);
+  transition: transform var(--dur) var(--spring);
+}
+.brand-moment__badge:hover svg { transform: rotate(-8deg) scale(1.08); }
+
+/* ----------------------------------------------------------------- bandeau */
+
+/* Une bande de scotch vert posée de travers, qui défile. Les éléments
+   portent une marge droite (pas un gap) : les deux copies du texte font
+   alors exactement la même largeur et la boucle ne saute pas. */
+.marquee {
+  position: relative;
+  z-index: 3;
+  overflow: clip;
+  padding-block: clamp(1.6rem, 3vw, 2.6rem);
+  background: var(--cream);
+}
+.marquee__tape {
+  margin-inline: -4vw;
+  padding-block: .85rem;
+  background: var(--forest);
+  color: var(--cream);
+  transform: rotate(-2deg);
+  box-shadow: 0 18px 30px -22px rgba(23, 61, 39, .6);
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+.marquee__track > * { margin-right: clamp(1.1rem, 2vw, 1.8rem); flex: none; }
+.marquee__track span {
+  font-weight: 800;
+  font-size: clamp(1.25rem, .9rem + 1.4vw, 2.1rem);
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+.marquee__track .script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  font-size: clamp(1.5rem, 1.05rem + 1.7vw, 2.5rem);
+  color: var(--gold-soft);
+}
+.marquee__track svg { width: 1.1rem; height: 1.1rem; color: var(--gold); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
+[data-motion="reduced"] .marquee__track { animation: none; }
+
+/* -------------------------------------------------------------- l'avenue */
+
+/* Le pointillé de la route entre deux sections. Trait et pointillés sont
+   posés sur #road-path (index.html) ; ici, seulement la couleur. */
+.road-divider {
+  display: block;
+  width: 100%;
+  height: clamp(2.5rem, 5vw, 4rem);
+  color: var(--gold);
+  background: var(--cream);
+}
+
+/* ---------------------------------------------------------------- en-têtes */
+
+.menu__head { max-width: 40rem; margin-bottom: clamp(2.2rem, 4vw, 3.2rem); }
+.menu__head h2 { margin-bottom: 1rem; }
+.menu__head p { color: var(--ink-mute); font-size: 1.05rem; margin: 0; }
+
+/* ------------------------------------------------------------------- carte */
+
+.menu { background: var(--cream-soft); }
+
+.menu__rows { display: flex; flex-direction: column; border-top: 1px solid var(--line-strong); }
+
+.menu-row { border-bottom: 1px solid var(--line-strong); }
+
+.menu-row__toggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.6rem);
+  padding-block: clamp(1rem, 2vw, 1.4rem);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.menu-row__num {
+  font-weight: 800;
+  font-size: clamp(.95rem, .3rem + 1vw, 1.2rem);
+  color: var(--tomato);
+  min-width: 2.4ch;
+}
+.menu-row__title { display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
+.menu-row__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 1rem + 3.4vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -.01em;
+  transition: color var(--dur-fast) var(--ease), transform var(--dur) var(--ease-out);
+}
+.menu-row__toggle:hover .menu-row__name { color: var(--forest); transform: translateX(.4rem); }
+.menu-row__tagline { color: var(--ink-mute); font-size: .95rem; }
+
+.menu-row__art {
+  position: relative;
+  isolation: isolate;
+  width: clamp(6rem, 11vw, 10.5rem);
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--dur) var(--spring);
+}
+.menu-row__art::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: var(--cream);
+  z-index: -1;
+  transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease);
+}
+.menu-row__toggle:hover .menu-row__art::before { transform: scale(1.08); background: var(--gold-soft); }
+.menu-row__art img { filter: drop-shadow(0 12px 12px rgba(31, 42, 34, .18)); }
+.menu-row__toggle:hover .menu-row__art { transform: scale(1.07) rotate(-5deg); }
+.menu-row__art picture { display: contents; }
+.menu-row__art img { width: 100%; height: 100%; object-fit: contain; }
+
+.menu-row__chevron {
+  width: 1.4rem; height: 1.4rem; color: var(--forest);
+  transition: transform var(--dur) var(--ease-out);
+}
+.menu-row__toggle[aria-expanded="true"] .menu-row__chevron { transform: rotate(180deg); }
+
+.menu-row__panel {
+  padding: 0 0 clamp(1.6rem, 3vw, 2.4rem) calc(2.4ch + clamp(1rem, 3vw, 2.6rem));
+  max-width: 52rem;
+}
+.menu-row__note { color: var(--ink-faint); font-size: .85rem; margin-bottom: .8rem; }
+
+@media (max-width: 40rem) {
+  .menu-row__toggle { grid-template-columns: 1fr auto auto; }
+  .menu-row__num { display: none; }
+  .menu-row__panel { padding-left: 0; }
+}
+
+.ticket__list { list-style: none; margin: 0; padding: 0; }
+.ticket__head, .ticket__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding-block: .7rem;
+  border-top: 1px solid var(--line);
+}
+.ticket__head { color: var(--ink-faint); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.ticket__label { min-width: 0; }
+.ticket__text { display: flex; flex-direction: column; min-width: 0; }
+.ticket__name { font-weight: 700; }
+.ticket__note { color: var(--ink-mute); font-size: .82rem; }
+.ticket__cells { display: flex; gap: clamp(.9rem, 2vw, 1.8rem); }
+.ticket__cell { min-width: 4.2ch; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ticket__cell i { color: var(--ink-faint); font-style: normal; }
+.ticket__price { font-weight: 800; color: var(--forest); }
+
+.menu__extras { margin-top: clamp(2.6rem, 4vw, 3.6rem); max-width: 52rem; }
+.menu__extras h3 {
+  font-size: .8rem; letter-spacing: .14em; margin-bottom: 1rem; color: var(--forest);
+}
+.extras__list {
+  list-style: none; margin: 0; padding: 0;
+  columns: 2 16rem;
+  column-gap: 3rem;
+}
+.extras__list li {
+  display: flex; align-items: baseline; gap: .5rem;
+  padding-block: .4rem;
+  break-inside: avoid;
+}
+.extras__name { font-size: .92rem; font-weight: 600; }
+.extras__lead { flex: 1; border-bottom: 1px dotted var(--line-strong); transform: translateY(-.25em); }
+.extras__price { font-size: .9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------- formules */
+
+/* Les affiches : quatre « posts » 4:5 dans les couleurs de la marque, sur le
+   principe des affiches de comptoir — un titre, un plat, un prix. Grille en
+   quinconce sur grand écran, rail au doigt sur téléphone. */
+.formules { background: var(--cream); padding-bottom: clamp(6rem, 10vw, 10rem); }
+
+.posters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.4rem, 3vw, 2.8rem);
+  align-items: start;
+}
+.poster:nth-child(even) { margin-top: clamp(3rem, 7vw, 6rem); }
+
+.poster {
+  --bg: var(--forest); --ink: var(--cream); --accent: var(--gold-soft);
+  --sticker-bg: var(--gold); --sticker-ink: var(--ink); --glow: rgba(242, 182, 50, .3);
+  --pad: clamp(1.3rem, 2.4vw, 2.1rem);
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 1.4rem;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad);
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 40px 70px -48px rgba(31, 42, 34, .55);
+}
+.poster--forest { --bg: #245B3A; --ink: #F8F1DF; --accent: #F7CE6C; --sticker-bg: #F2B632; --sticker-ink: #1F2A22; --glow: rgba(242, 182, 50, .28); }
+.poster--tomato { --bg: #D94B32; --ink: #FFF6E6; --accent: #FBD98A; --sticker-bg: #F8F1DF; --sticker-ink: #245B3A; --glow: rgba(255, 220, 160, .34); }
+.poster--gold   { --bg: #F2B632; --ink: #1F2A22; --accent: #245B3A; --sticker-bg: #245B3A; --sticker-ink: #F8F1DF; --glow: rgba(255, 250, 235, .55); }
+.poster--cream  { --bg: #F1E7CC; --ink: #1F2A22; --accent: #D94B32; --sticker-bg: #D94B32; --sticker-ink: #FFF6E6; --glow: rgba(242, 182, 50, .38); }
+
+/* La lumière : un halo derrière le plat, comme un projecteur. */
+.poster::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 45% at 52% 62%, var(--glow), transparent 70%);
+  z-index: -1;
+}
+
+/* Le mot fantôme : le nom de la formule en géant, au trait, derrière tout. */
+.poster__ghost {
+  position: absolute;
+  left: -.04em; bottom: 14%;
+  font-weight: 800;
+  font-size: clamp(6rem, 13vw, 11rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -.03em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  opacity: .13;
+  white-space: nowrap;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.poster__road {
+  position: absolute;
+  left: -4%;
+  width: 108%;
+  top: 44%;
+  height: 14%;
+  color: var(--accent);
+  opacity: .55;
+  z-index: -1;
+}
+
+.poster__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.poster__eyebrow {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.poster__mark { width: 2.4rem; height: auto; flex: none; }
+
+.poster__title {
+  position: relative;
+  z-index: 2;
+  margin: .9rem 0 0;
+  font-size: clamp(1.7rem, .9rem + 2.3vw, 3rem);
+  line-height: .98;
+  color: var(--ink);
+}
+.poster__line { display: block; }
+.poster__title .script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.12em;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.poster__shots { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.poster__shot {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: var(--w);
+  transform: translate(-50%, -50%) rotate(var(--r));
+  transition: transform .8s var(--spring);
+  filter: drop-shadow(0 24px 20px rgba(0, 0, 0, .28));
+}
+.poster__shot picture { display: contents; }
+.poster__shot img { width: 100%; height: auto; }
+.poster:hover .poster__shot { transform: translate(-50%, -53%) rotate(calc(var(--r) + 4deg)) scale(1.05); }
+.poster:hover .poster__shot:nth-child(2) { transform: translate(-50%, -48%) rotate(calc(var(--r) - 5deg)) scale(1.05); }
+
+/* Le prix : une pastille autocollante, légèrement de travers. */
+.poster__sticker {
+  position: absolute;
+  right: 6%; top: 30%;
+  z-index: 3;
+  width: clamp(5.2rem, 8vw, 6.6rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: .1rem;
+  background: var(--sticker-bg);
+  color: var(--sticker-ink);
+  transform: rotate(-11deg);
+  box-shadow: 0 14px 24px -12px rgba(0, 0, 0, .45);
+  transition: transform .6s var(--spring);
+}
+.poster__sticker::after {
+  content: "";
+  position: absolute; inset: 5px;
+  border-radius: 50%;
+  border: 1.5px dashed currentColor;
+  opacity: .45;
+}
+.poster__sticker span { font-size: .56rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.poster__sticker b { font-size: clamp(1.1rem, .8rem + .8vw, 1.5rem); font-weight: 800; line-height: 1; letter-spacing: -.02em; white-space: nowrap; }
+.poster:hover .poster__sticker { transform: rotate(-3deg) scale(1.07); }
+
+.poster__foot {
+  position: relative;
+  z-index: 2;
+  margin: auto calc(-1 * var(--pad)) calc(-1 * var(--pad));
+  padding: 3.4rem var(--pad) var(--pad);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  /* Le plat passe derrière le pied d'affiche : un fondu vers la couleur
+     de fond garde le texte lisible sans couper la photo net. */
+  background: linear-gradient(to top, var(--bg) 45%, transparent);
+}
+.poster__foot p { margin: 0; max-width: 64%; font-size: .82rem; font-weight: 600; line-height: 1.4; }
+.poster__cta {
+  flex: none;
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .65rem 1.05rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.poster__cta svg { width: 1.05em; height: 1.05em; transition: transform var(--dur-fast) var(--ease-out); }
+.poster__cta:hover svg { transform: translateX(3px); }
+
+/* Téléphone : un rail d'affiches qui défile au doigt, une à la fois. */
+@media (max-width: 40rem) {
+  .posters {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    padding-bottom: 1rem;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .posters::-webkit-scrollbar { display: none; }
+  .poster { scroll-snap-align: start; }
+  .poster:nth-child(even) { margin-top: 0; }
+  .poster__foot { flex-direction: column; align-items: flex-start; gap: .7rem; }
+  .poster__foot p { max-width: none; }
+  .formules { padding-bottom: clamp(4rem, 8vw, 6rem); }
+}
+
+/* ------------------------------------------------------------------ maison */
+
+.maison { background: var(--cream-soft); }
+.maison__grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.maison h2 { margin-bottom: 1.2rem; }
+.maison p { color: var(--ink-mute); font-size: 1.05rem; }
+.maison__proofs { list-style: none; margin: 2.2rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.3rem; }
+.maison__proofs li { display: flex; gap: 1rem; }
+.maison__proofs span { font-weight: 800; color: var(--tomato); font-size: 1.05rem; min-width: 2ch; }
+.maison__proofs b { display: block; font-size: 1rem; margin-bottom: .15rem; }
+.maison__proofs p { margin: 0; font-size: .92rem; }
+
+.maison__shot {
+  position: relative;
+  margin: 0;
+  /* En arche : une fenêtre de four, pas un cadre de photo. */
+  border-radius: 999px 999px var(--radius-md) var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--forest-deep);
+}
+.maison__caption {
+  position: absolute;
+  left: 1.2rem; bottom: 1.2rem;
+  padding: .35rem 1rem .45rem;
+  border-radius: 999px;
+  background: var(--cream);
+  transform: rotate(-3deg);
+  box-shadow: 0 10px 20px -12px rgba(0, 0, 0, .45);
+}
+.maison__caption .script { font-size: 1.35rem; color: var(--tomato); }
+.maison__photo, .maison__photo picture { display: block; width: 100%; height: 100%; }
+.maison__photo img { width: 100%; height: 100%; object-fit: cover; }
+.maison__shot-deco {
+  position: absolute; right: 18%; top: 12%;
+  width: 2.2rem; height: 2.2rem; color: var(--gold);
+}
+
+@media (max-width: 56rem) {
+  .maison__grid { grid-template-columns: 1fr; }
+  .maison__shot { order: -1; aspect-ratio: 4 / 3; }
+}
+
+/* -------------------------------------------------------------------- avis */
+
+.avis { background: var(--cream); }
+.avis__head { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: end; margin-bottom: 2.5rem; }
+.avis__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.4rem; }
+.avis__stars { color: var(--gold); letter-spacing: .1em; margin-bottom: .6rem; }
+.avis__cta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 2.4rem; }
+.avis__cta p { flex-basis: 100%; color: var(--ink-faint); font-size: .8rem; margin: .4rem 0 0; }
+
+@media (max-width: 56rem) { .avis__head { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------------- venir */
+
+.venir { background: var(--cream); }
+.venir__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.infos { margin: 1.6rem 0; display: flex; flex-direction: column; gap: 1rem; }
+.info-row { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+.info-row dt { font-weight: 800; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--forest); }
+.info-row dd { margin: 0; }
+.info-row a { text-decoration: underline; text-underline-offset: 3px; }
+.hours span { display: block; }
+
+.mapbox { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 4/3; background: var(--forest-deep); }
+.mapbox__facade {
+  width: 100%; height: 100%; border: 0; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem;
+  padding: 2rem; text-align: center; color: var(--cream); background: transparent;
+  font: inherit;
+}
+.mapbox__pin { width: 2rem; height: 2.5rem; color: var(--gold); margin-bottom: .4rem; }
+.mapbox__facade b { font-size: 1.2rem; }
+.mapbox__facade small { color: rgba(248, 241, 223, .6); max-width: 22rem; }
+.mapbox iframe { width: 100%; height: 100%; border: 0; }
+
+@media (max-width: 56rem) { .venir__grid { grid-template-columns: 1fr; } }
+
+/* --------------------------------------------------------------- final cta */
+
+.cta {
+  background: var(--forest);
+  color: var(--cream);
+  text-align: center;
+  padding-block: clamp(4.5rem, 9vw, 8rem) clamp(6rem, 11vw, 10rem);
+  padding-inline: var(--gutter);
+  position: relative;
+  overflow: clip;
+}
+.cta .eyebrow { justify-content: center; color: var(--gold-soft); }
+.cta .eyebrow::after { display: none; }
+.cta h2 { font-size: clamp(2.6rem, 1.4rem + 5vw, 5.6rem); line-height: 1.05; }
+.cta .script { color: var(--gold-soft); }
+.cta p { max-width: 30rem; margin: 1.2rem auto 2rem; color: rgba(248, 241, 223, .82); font-size: 1.1rem; }
+.cta .btn { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.cta .btn:hover { box-shadow: 0 10px 28px -12px rgba(0, 0, 0, .4); }
+.cta > :not(.cta__pizza):not(.cta__road) { position: relative; z-index: 1; }
+/* La pizza qui dépasse du coin et tourne lentement : on finit sur elle
+   comme on a commencé. */
+.cta__pizza {
+  position: absolute;
+  right: clamp(-12rem, -12vw, -5rem);
+  bottom: clamp(-12rem, -14vw, -6rem);
+  width: clamp(16rem, 36vw, 32rem);
+  z-index: 0;
+  pointer-events: none;
+  animation: slow-spin 90s linear infinite;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .35));
+}
+.cta__pizza picture { display: contents; }
+.cta__pizza img { width: 100%; height: auto; }
+@keyframes slow-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .cta__pizza { animation: none; } }
+[data-motion="reduced"] .cta__pizza { animation: none; }
+@media (max-width: 40rem) { .cta__pizza { width: 15rem; right: -6rem; bottom: -7rem; opacity: .9; } }
+
+.cta__road {
+  position: absolute; left: 0; right: 0; bottom: 1.6rem;
+  width: 100%; height: 3rem;
+  color: rgba(248, 241, 223, .28);
+}

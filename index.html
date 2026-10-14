@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Pizza Avenue — Fast food · Good mood</title>
+<meta name="description" content="Pizza, burgers, tacos français et tex-mex faits à la commande. Pâte pétrie sur place, viande grillée minute. Pizza Avenue — fast food, good mood.">
+<link rel="canonical" href="https://pizza-avenue.example/">
+
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Pizza Avenue">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Pizza Avenue — Fast food · Good mood">
+<meta property="og:description" content="Pizza, burgers, tacos français et tex-mex faits à la commande.">
+<meta property="og:image" content="/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F8F1DF">
+
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+<!--
+  TODO-OWNER — Pizza Avenue est une marque concept : les coordonnées
+  ci-dessous (src/data/site.js) sont des placeholders. Ne pas publier ce
+  balisage tel quel sans les remplacer par les vraies informations de
+  l'établissement. Volontairement SANS aggregateRating tant que les avis
+  ne sont pas réels (voir la note dans index.html de Taco Naan pour le
+  raisonnement : un balisage d'avis auto-déclaré est contraire aux
+  consignes de Google).
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Pizza Avenue",
+  "servesCuisine": ["Pizza", "Burgers", "Tacos", "Tex-Mex"],
+  "priceRange": "€€",
+  "currenciesAccepted": "EUR"
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#top" data-i18n="skip">Aller au contenu</a>
+
+<!-- ============================================================ symboles -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- ------------------------------------------------- géométrie pizza -->
+    <!-- Une part = 45°, du centre (100,100) au bord (r=90). Le même gabarit
+         est instancié 8 fois par rotation — voir #pizzaSlices — pour que la
+         transformation (§4 du plan) puisse détacher chaque part
+         individuellement tout en gardant une seule géométrie à entretenir. -->
+    <g id="wedge-base">
+      <path d="M100,100 L190,100 A90,90 0 0 1 163.64,163.64 Z" fill="var(--crust)"/>
+      <path d="M100,100 L182,100 A82,82 0 0 1 157.98,157.98 Z" fill="var(--cheese)"/>
+      <path d="M100,100 L190,100" stroke="var(--crust-dark)" stroke-width="1.4" opacity=".45"/>
+      <circle cx="184.7" cy="114.9" r="2.1" fill="var(--crust-dark)" opacity=".5"/>
+      <circle cx="169.6" cy="150.6" r="1.7" fill="var(--crust-dark)" opacity=".5"/>
+      <circle cx="156.7" cy="112.1" r="7.1" fill="var(--tomato)"/>
+      <circle cx="156.7" cy="112.1" r="7.1" fill="none" stroke="#b83a24" stroke-width=".8" opacity=".5"/>
+      <circle cx="135.2" cy="122.9" r="6.3" fill="var(--tomato)"/>
+      <circle cx="135.2" cy="122.9" r="6.3" fill="none" stroke="#b83a24" stroke-width=".8" opacity=".5"/>
+      <ellipse cx="175.2" cy="127.4" rx="5.6" ry="4" fill="var(--cheese)"/>
+    </g>
+    <g id="wedge-a">
+      <use href="#wedge-base"/>
+      <path d="M157,124 Q160,120 164,120.5 Q168,121 167,125.5 Q163.5,128.5 160,127.5 Q157.5,126.5 157,124 Z"
+            fill="var(--basil)" transform="translate(0 4) rotate(-18 162 127)"/>
+    </g>
+    <g id="wedge-b">
+      <use href="#wedge-base"/>
+    </g>
+
+    <!-- Le symbole du logo : la moitié haute de la pizza (parts 4 à 7). C'est
+         exactement la forme en laquelle se transforme la pizza du héros. -->
+    <symbol id="mark-dome" viewBox="8 8 184 94">
+      <use href="#wedge-a" transform="rotate(180 100 100)"/>
+      <use href="#wedge-b" transform="rotate(225 100 100)"/>
+      <use href="#wedge-a" transform="rotate(270 100 100)"/>
+      <use href="#wedge-b" transform="rotate(315 100 100)"/>
+    </symbol>
+
+    <!-- Découpe de la photo du héros en 8 parts. Chaque part déborde d'un
+         demi-degré sur ses voisines : les bords antialiasés se recouvrent au
+         lieu de laisser passer un fil de fond entre deux parts. r = 92, un
+         cheveu au-delà de la croûte (la photo remplit un cercle de r = 90). -->
+    <clipPath id="wc-0"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(0 100 100)"/></clipPath>
+    <clipPath id="wc-1"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(45 100 100)"/></clipPath>
+    <clipPath id="wc-2"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(90 100 100)"/></clipPath>
+    <clipPath id="wc-3"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(135 100 100)"/></clipPath>
+    <clipPath id="wc-4"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(180 100 100)"/></clipPath>
+    <clipPath id="wc-5"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(225 100 100)"/></clipPath>
+    <clipPath id="wc-6"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(270 100 100)"/></clipPath>
+    <clipPath id="wc-7"><path d="M100,100 L192,99.2 A92,92 0 0 1 164.48,165.62 Z" transform="rotate(315 100 100)"/></clipPath>
+
+    <!-- ------------------------------------------------------- décoration -->
+    <symbol id="ic-arrow-curl" viewBox="0 0 120 80">
+      <path d="M4 8 C 40 4, 70 18, 84 46 C 90 58, 88 66, 82 70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <path d="M64 60 L82 72 L92 52" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ic-arrow" viewBox="0 0 24 24">
+      <path d="M4 12 H19 M13 6 L19 12 L13 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 40 40">
+      <path d="M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-crown" viewBox="0 0 48 36">
+      <path d="M4 30 L2 10 L14 20 L24 4 L34 20 L46 10 L44 30 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-pin" viewBox="0 0 32 40">
+      <path d="M16 0 C6 0 0 7 0 16 C0 27 16 40 16 40 C16 40 32 27 32 16 C32 7 26 0 16 0 Z" fill="currentColor"/>
+      <circle cx="16" cy="16" r="6" fill="var(--cream)"/>
+    </symbol>
+    <symbol id="ic-leaf" viewBox="0 0 32 20">
+      <path d="M1 18 C1 8 10 1 30 1 C24 12 14 18 1 18 Z" fill="currentColor"/>
+    </symbol>
+    <!-- Icônes de catégorie : un seul trait, une seule épaisseur, comme la
+         rangée « UI elements » du brand board. -->
+    <symbol id="ic-pizza" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 11 C 15 6, 25 6, 33 11 L 20 35 Z"/>
+        <path d="M9.5 14.5 C 16 11, 24 11, 30.5 14.5"/>
+        <circle cx="17" cy="19" r="2"/><circle cx="23.5" cy="22" r="1.8"/><circle cx="20" cy="27.5" r="1.4"/>
+      </g>
+    </symbol>
+    <symbol id="ic-burger" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17 C 7 10, 13 6, 20 6 C 27 6, 33 10, 33 17 Z"/>
+        <path d="M6 22 H34"/>
+        <path d="M7 26.5 C 10 24.5, 12 28.5, 15 26.5 S 20 24.5, 23 26.5 S 29 28.5, 33 26.5"/>
+        <path d="M8 30.5 H32 C 32 33, 30.5 34.5, 28 34.5 H12 C 9.5 34.5, 8 33, 8 30.5 Z"/>
+      </g>
+    </symbol>
+    <symbol id="ic-taco" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="11" width="28" height="18" rx="4"/>
+        <path d="M13 12 L 9 21 M 21 12 L 14 27 M 29 12 L 21 28 M 33 18 L 28 28"/>
+      </g>
+    </symbol>
+    <symbol id="ic-texmex" viewBox="0 0 40 40">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 21 H35 L31 33 H9 Z"/>
+        <path d="M8.5 21 C 8 16, 13 14.5, 15.5 17.5 C 16.5 13, 23 12.5, 24.5 17 C 26.5 14, 32 15, 31.5 21"/>
+      </g>
+    </symbol>
+
+    <!-- Trait pointillé de l'« avenue ». Trait et pointillés sont posés sur le
+         chemin lui-même : un <use> ne laisse pas le CSS atteindre son
+         contenu, et sans eux le tracé se remplissait en noir. -->
+    <symbol id="deco-road" viewBox="0 0 400 40" preserveAspectRatio="none">
+      <path id="road-path" d="M0 20 C 80 4, 140 36, 220 20 C 300 4, 340 36, 400 20"
+            fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="14 12"
+            stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ======================================================= barre supérieure -->
+<header class="topbar" data-stuck="false">
+  <a class="topbar__mark" href="#top" aria-label="Pizza Avenue">
+    <svg class="logo-lockup" viewBox="0 0 260 118" aria-hidden="true">
+      <g class="logo-lockup__mark"><use href="#mark-dome" x="88" y="3" width="84" height="43"/></g>
+      <g class="logo-lockup__ticks" fill="none" stroke-width="3" stroke-linecap="round">
+        <path d="M78 32 L69 25" stroke="var(--forest)"/><path d="M75 43 L64 42" stroke="var(--gold)"/>
+        <path d="M182 32 L191 25" stroke="var(--gold)"/><path d="M185 43 L196 42" stroke="var(--forest)"/>
+      </g>
+      <text class="logo-lockup__word" x="130" y="88" text-anchor="middle" font-family="var(--font-script)" font-size="42" fill="currentColor">Pizza Avenue</text>
+      <path class="logo-lockup__swash" d="M64 104 C 100 96, 150 111, 198 99" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+  </a>
+
+  <nav class="topbar__nav" id="siteNav" aria-label="Navigation">
+    <a href="#menu" data-i18n="nav.menu">La carte</a>
+    <a href="#maison" data-i18n="nav.maison">La maison</a>
+    <a href="#avis" data-i18n="nav.avis">Les avis</a>
+    <a href="#venir" data-i18n="nav.venir">Nous trouver</a>
+  </nav>
+
+  <div class="topbar__end">
+    <div class="lang" role="group" aria-label="Langue · Idioma · Language">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn--sm topbar__cta" href="#venir">
+      <span data-i18n="nav.call">Commander</span>
+    </a>
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="siteNav">
+      <span class="navtoggle__bars" aria-hidden="true"></span>
+      <span class="navtoggle__label" data-i18n="nav.open">Menu</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- =================================================================== 01 hero -->
+  <section class="hero">
+    <div id="heroPin">
+      <div class="hero-stage" id="heroStage">
+        <div class="hero-stage__glow" aria-hidden="true"></div>
+
+        <!-- Les ingrédients qui flottent autour de la pizza, puis s'envolent
+             au premier scroll (phase 1 de la timeline). Remplis par
+             src/js/posters.js (garnish_basil / garnish_tomato). -->
+        <div class="hero-garnish" aria-hidden="true">
+          <div class="garnish garnish--a" data-garnish="garnish_basil"></div>
+          <div class="garnish garnish--b" data-garnish="garnish_tomato"></div>
+          <div class="garnish garnish--c" data-garnish="garnish_basil"></div>
+        </div>
+
+        <!-- La pizza, trois couches superposées dans le même repère 200×200 :
+               1. #pizzaWhole — la photo entière, seule visible pendant la
+                  rotation (aucune couture pendant qu'elle tourne) ;
+               2. .slice-photo — la même photo découpée en 8 parts (#wc-N),
+                  qui prennent le relais au moment où les parts se séparent ;
+               3. .slice-illo — la part dessinée du logo, même géométrie, dans
+                  laquelle la moitié haute se fond en devenant le symbole.
+             Le href des photos est posé par src/js/hero/photo.js depuis le
+             manifeste — pas en dur ici, pour qu'une nouvelle image dans
+             images/hero_pizza.png suffise. -->
+        <div class="hero-stage__pizza" id="heroPizza" aria-hidden="true">
+          <svg viewBox="0 0 200 200">
+            <image id="pizzaWhole" class="pizza-photo" x="10" y="10" width="180" height="180"/>
+            <g id="pizzaSlices">
+              <g class="pizza-slice" data-slice="0"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-0)"/><g class="slice-illo" transform="rotate(0 100 100)"><use href="#wedge-a"/></g></g>
+              <g class="pizza-slice" data-slice="1"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-1)"/><g class="slice-illo" transform="rotate(45 100 100)"><use href="#wedge-b"/></g></g>
+              <g class="pizza-slice" data-slice="2"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-2)"/><g class="slice-illo" transform="rotate(90 100 100)"><use href="#wedge-a"/></g></g>
+              <g class="pizza-slice" data-slice="3"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-3)"/><g class="slice-illo" transform="rotate(135 100 100)"><use href="#wedge-b"/></g></g>
+              <g class="pizza-slice" data-slice="4"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-4)"/><g class="slice-illo" transform="rotate(180 100 100)"><use href="#wedge-a"/></g></g>
+              <g class="pizza-slice" data-slice="5"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-5)"/><g class="slice-illo" transform="rotate(225 100 100)"><use href="#wedge-b"/></g></g>
+              <g class="pizza-slice" data-slice="6"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-6)"/><g class="slice-illo" transform="rotate(270 100 100)"><use href="#wedge-a"/></g></g>
+              <g class="pizza-slice" data-slice="7"><image class="pizza-photo slice-photo" x="10" y="10" width="180" height="180" clip-path="url(#wc-7)"/><g class="slice-illo" transform="rotate(315 100 100)"><use href="#wedge-b"/></g></g>
+            </g>
+          </svg>
+          <!-- Macaron tournant, posé sur la pizza : il tourne avec elle au
+               scroll, puis s'efface avec l'accroche. -->
+          <div class="hero-badge" id="heroBadge" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs><path id="badgeCircle" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
+              <circle cx="60" cy="60" r="58" fill="var(--forest)"/>
+              <circle cx="60" cy="60" r="53" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="2 3"/>
+              <g class="hero-badge__ring"><text font-family="var(--font-display)" font-weight="800" font-size="10" fill="var(--cream)" letter-spacing="1"><textPath href="#badgeCircle" textLength="280" lengthAdjust="spacing" data-i18n="hero.badge">FAIT MAISON ✦ SERVI CHAUD ✦</textPath></text></g>
+              <use href="#mark-dome" x="37" y="47" width="46" height="24"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="hero-stage__logo" id="heroLogo" aria-hidden="true">
+          <!-- Symbole statique : visible seulement sans animation
+               (data-motion="reduced"), où la pizza ne se transforme pas. -->
+          <svg class="hero-stage__mark" viewBox="8 8 184 94"><use href="#mark-dome"/></svg>
+          <svg class="hero-stage__wordmark" id="heroWordmark" viewBox="0 0 320 80">
+            <clipPath id="wordmarkClip"><rect id="wordmarkClipRect" x="0" y="0" width="0" height="80"/></clipPath>
+            <text x="8" y="58" font-family="var(--font-script)" font-size="56" fill="var(--forest)" clip-path="url(#wordmarkClip)">Pizza Avenue</text>
+          </svg>
+          <svg class="hero-stage__swash" id="heroSwash" viewBox="0 0 260 30">
+            <path id="heroSwashPath" d="M6,18 C 40,6 90,26 130,14 C 170,4 210,22 254,10"/>
+          </svg>
+          <p class="hero-stage__tagline" id="heroTagline">Fast food &middot; Good mood</p>
+        </div>
+
+        <div class="hero-copy-wrap">
+          <div class="hero-copy" id="heroCopy">
+            <p class="hero-copy__kicker" data-i18n="hero.kicker">Pizza · Burgers · Tacos · Tex-Mex</p>
+            <h1>
+              <span data-i18n="hero.t1">Bonne bouffe.</span>
+              <span class="script" data-i18n="hero.t2">Bonne humeur.</span>
+              <span class="hero-copy__sub" data-i18n="hero.t3">Tous les jours.</span>
+            </h1>
+            <p class="hero-copy__lede" data-i18n-html="hero.lede">Pâte pétrie sur place, viande grillée à la commande, sauces maison. <strong>Toujours vite, jamais bâclé.</strong></p>
+            <a class="btn" href="#menu"><span data-i18n="hero.cta">Voir la carte</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+          </div>
+        </div>
+
+        <div class="hero-scrollhint" id="heroScrollHint">
+          <span data-i18n="hero.scroll">Faites défiler</span>
+          <span class="hero-scrollhint__mouse" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= 02 brand moment -->
+  <section class="brand-moment section-pad">
+    <!-- Cette section remonte sous la scène du héros : le logo, rangé en
+         filigrane en haut de la scène (phase 5 de src/js/hero/timeline.js),
+         passe derrière elle en défilant. -->
+    <div class="wrap">
+      <h2 class="brand-moment__title script" data-reveal>Real food. Good mood.</h2>
+      <p data-reveal data-i18n="brand.p">Pizza Avenue est né d’une idée simple : le fast-food peut être fait avec soin, sans perdre en vitesse ni en plaisir. Quatre cuisines, une seule exigence.</p>
+
+      <ul class="brand-moment__badges" data-reveal>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-pizza"/></svg>Pizza</li>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-burger"/></svg>Burgers</li>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-taco"/></svg>Tacos</li>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-texmex"/></svg>Tex-Mex</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Le bandeau : une bande de scotch en travers de la page, qui défile. -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__tape">
+      <div class="marquee__track"><span>Pizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">fait maison</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Burgers</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">servi chaud</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tacos</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">good mood</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Pizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">fait maison</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Burgers</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">servi chaud</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tacos</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">good mood</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg></div>
+    </div>
+  </div>
+
+  <!-- ================================================================== 03 menu -->
+  <section class="menu section-pad" id="menu">
+    <div class="wrap">
+      <p class="eyebrow"><b>01</b> <span data-i18n="menu.eyebrow">La carte</span></p>
+      <div class="menu__head">
+        <h2 data-i18n-html="menu.h2">Quatre routes, <em>une avenue</em></h2>
+        <p data-i18n="menu.intro">Tout est préparé à la commande. Les prix sont les mêmes sur place et à emporter.</p>
+      </div>
+
+      <!-- Rempli par src/js/menu.js depuis src/data/menu.js -->
+      <div class="menu__rows"></div>
+      <div class="menu__extras"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================= 04 formules -->
+  <section class="formules section-pad" id="formules">
+    <div class="wrap">
+      <p class="eyebrow"><b>02</b> <span data-i18n="formules.eyebrow">Les formules</span></p>
+      <div class="menu__head">
+        <h2 data-i18n-html="formules.h2">Nos formules <em>signature</em></h2>
+        <p data-i18n="formules.intro">Des menus pensés pour être partagés — ou pas. Prix fixes, sur place et à emporter.</p>
+      </div>
+
+      <!-- Les affiches, construites par src/js/posters.js depuis
+           src/data/menu.js (combos) : textes et prix restent du texte, donc
+           traduits, nets à toutes les tailles et modifiables en un endroit. -->
+      <div class="posters"></div>
+    </div>
+  </section>
+
+  <!-- ================================================================ 05 maison -->
+  <section class="maison section-pad" id="maison">
+    <div class="wrap maison__grid">
+      <div data-reveal>
+        <p class="eyebrow"><b>03</b> <span data-i18n="maison.eyebrow">La maison</span></p>
+        <h2 data-i18n-html="maison.h2">Un comptoir, <em>pas une chaîne</em></h2>
+        <p data-i18n="maison.p1">On a ouvert avenue pour faire une chose correctement : une pâte pétrie sur place, une viande grillée au moment où vous la commandez, des sauces qu’on fait nous-mêmes.</p>
+        <p data-i18n="maison.p2">Pas de raccourci, pas de surgelé qui traîne, pas quarante minutes d’attente. Vous commandez, on prépare, c’est prêt.</p>
+
+        <ul class="maison__proofs">
+          <li><span>01</span><div><b data-i18n="proof.1.t">La pâte, tous les jours</b><p data-i18n="proof.1.d">Pétrie et poussée sur place, jamais la veille.</p></div></li>
+          <li><span>02</span><div><b data-i18n="proof.2.t">Servi vite, servi chaud</b><p data-i18n="proof.2.d">Chaque plat part du grill ou du four à la commande.</p></div></li>
+          <li><span>03</span><div><b data-i18n="proof.3.t">Quatre cuisines, un seul comptoir</b><p data-i18n="proof.3.d">Pizza, burgers, tacos, tex-mex — sans compromis sur aucune.</p></div></li>
+        </ul>
+      </div>
+
+      <figure class="maison__shot" data-reveal>
+        <!-- Rempli par src/js/posters.js (clé maison_scene du manifeste) -->
+        <div class="maison__photo" id="maisonPhoto"></div>
+        <figcaption class="maison__caption"><span class="script" data-i18n="maison.caption">cuite minute, chaque jour</span></figcaption>
+        <svg class="maison__shot-deco" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-sparkle"/></svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================================================================== 06 avis -->
+  <section class="avis section-pad" id="avis" hidden>
+    <div class="wrap">
+      <p class="eyebrow"><b>04</b> <span data-i18n="avis.eyebrow">Les avis</span></p>
+      <div class="avis__head">
+        <h2 data-reveal data-i18n="avis.h2">{n} personnes ont pris le temps d’écrire.</h2>
+      </div>
+      <div class="avis__grid"></div>
+      <div class="avis__cta">
+        <a class="btn" data-review-write href="#" target="_blank" rel="noopener"><span data-i18n="avis.write">Laisser un avis</span></a>
+        <a class="btn btn--ghost" data-review-read href="#" target="_blank" rel="noopener"><span data-i18n="avis.read">Voir les avis</span></a>
+        <p data-i18n="avis.source">Avis repris tels quels de notre fiche Google.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= 07 venir -->
+  <section class="venir section-pad" id="venir">
+    <div class="wrap">
+      <p class="eyebrow"><b>05</b> <span data-i18n="venir.eyebrow">Nous trouver</span></p>
+
+      <div class="venir__grid">
+        <div data-reveal>
+          <h2 data-i18n-html="venir.h2">Sur <em>l’avenue</em></h2>
+
+          <dl class="infos">
+            <div class="info-row">
+              <dt data-i18n="venir.address">Adresse</dt>
+              <dd><a id="venirAddress" href="#" target="_blank" rel="noopener"></a></dd>
+            </div>
+            <div class="info-row">
+              <dt data-i18n="venir.phone">Téléphone</dt>
+              <dd><a id="venirPhone" href="#"></a></dd>
+            </div>
+            <div class="info-row">
+              <dt data-i18n="venir.hours">Horaires</dt>
+              <dd>
+                <span class="hours" id="venirHours"></span>
+                <span class="status" data-status></span>
+              </dd>
+            </div>
+            <div class="info-row">
+              <dt data-i18n="venir.service">Service</dt>
+              <dd data-i18n="venir.service.v">Sur place et à emporter. Commande par téléphone.</dd>
+            </div>
+          </dl>
+
+          <a class="btn btn--ghost" id="venirRoute" href="#" target="_blank" rel="noopener">
+            <span data-i18n="venir.route">Itinéraire</span>
+          </a>
+        </div>
+
+        <div data-reveal>
+          <div class="mapbox">
+            <button class="mapbox__facade" type="button">
+              <svg class="mapbox__pin" viewBox="0 0 32 40" aria-hidden="true"><use href="#ic-pin"/></svg>
+              <b data-i18n="map.title">Ouvrir la carte</b>
+              <span data-i18n="map.sub">Cliquer pour charger</span>
+              <small data-i18n="map.note">La carte Google ne se charge qu’à votre demande : la page reste rapide et aucun traceur ne démarre avant.</small>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= 08 final cta -->
+  <section class="cta">
+    <p class="eyebrow"><span data-i18n="cta.eyebrow">Pour finir</span></p>
+    <h2><span class="script" data-i18n="cta.h2">On se voit sur l’avenue.</span></h2>
+    <p data-i18n="cta.p">Appelez, passez, repartez avec. C’est toute la promesse.</p>
+    <a class="btn" id="ctaOrder" href="#venir"><span data-i18n="cta.order">Commander maintenant</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+    <div class="cta__pizza" id="ctaPizza" aria-hidden="true"></div>
+    <svg class="cta__road" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><use href="#road-path"/></svg>
+  </section>
+</main>
+
+<!-- =========================================================== pied de page -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <p class="footer__brand">
+        <svg class="logo-lockup" viewBox="0 0 260 118" aria-hidden="true">
+          <g class="logo-lockup__mark"><use href="#mark-dome" x="88" y="3" width="84" height="43"/></g>
+          <g class="logo-lockup__ticks" fill="none" stroke-width="3" stroke-linecap="round">
+            <path d="M78 32 L69 25" stroke="var(--forest)"/><path d="M75 43 L64 42" stroke="var(--gold)"/>
+            <path d="M182 32 L191 25" stroke="var(--gold)"/><path d="M185 43 L196 42" stroke="var(--forest)"/>
+          </g>
+          <text class="logo-lockup__word" x="130" y="88" text-anchor="middle" font-family="var(--font-script)" font-size="42" fill="currentColor">Pizza Avenue</text>
+          <path class="logo-lockup__swash" d="M64 104 C 100 96, 150 111, 198 99" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </p>
+
+      <div>
+        <p class="footer__tagline" data-i18n="foot.tagline">Fast food · Good mood</p>
+        <p id="footAddress"></p>
+      </div>
+
+      <div>
+        <p data-i18n="foot.orders">Commandes</p>
+        <p class="footer__phone"><a id="footPhone" href="#"></a></p>
+        <p class="footer__links" id="footLinks"></p>
+      </div>
+    </div>
+
+    <p class="footer__legal">
+      <span data-i18n="foot.legal">© 2026 Pizza Avenue</span>
+    </p>
+  </div>
+</footer>
+
+<div class="callbar" data-show="false">
+  <span class="status" data-status></span>
+  <a class="btn btn--sm" href="#venir"><span data-i18n="nav.call">Commander</span></a>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

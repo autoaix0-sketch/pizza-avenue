@@ -1,0 +1,22 @@
+# Store text files with LF line endings in Git.
+# On Windows, Git converts them back to your local setting on checkout.
+* text=auto
+
+# Media and fonts: binary, never change line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.webm binary
+*.mov binary
+*.wav binary
+*.mp3 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
