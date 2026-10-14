@@ -31,8 +31,10 @@ export function enrichRestaurantLd() {
   try { data = JSON.parse(node.textContent); } catch (e) { return; }
 
   data.name = site.brand.name;
-  data.url = location.origin + '/';
-  data.image = location.origin + '/assets/og.jpg';
+  /* Relatif à la page : marche à la racine d'un domaine comme sous
+     /pizza-avenue/ (GitHub Pages). */
+  data.url = new URL('./', document.baseURI).href;
+  data.image = new URL('assets/og.jpg', document.baseURI).href;
   data.hasMenu = {
     '@type': 'Menu',
     name: 'Menu halal',

@@ -36,11 +36,16 @@ infos légales).
 
 ## En ligne
 
-Version de présentation pour le client sur Vercel (projet `avenue-pizza`),
-déployée avec `vercel deploy --prod --yes` depuis ce dossier.
+- Code : GitHub `autoaix0-sketch/pizza-avenue` (le dépôt porte le nom de la marque ;
+  le dossier s'appelle `avenue-pizza` car `sites/pizza-avenue` est la démo du Lab).
+- Version de présentation pour le client : **https://autoaix0-sketch.github.io/pizza-avenue/**
+  (GitHub Pages). Chaque push sur `main` reconstruit et republie le site
+  (`.github/workflows/pages.yml`, avec `BASE_PATH=/pizza-avenue/`).
+- `vercel.json` est prêt si le site passe un jour sur Vercel (`vercel deploy --prod --yes`).
 
 **Avant le vrai lancement** :
-- retirer l'en-tête `X-Robots-Tag: noindex` de `vercel.json` (il cache le site à Google
-  tant que les infos ne sont pas confirmées) ;
+- retirer `<meta name="robots" content="noindex, nofollow">` de `index.html` et l'en-tête
+  `X-Robots-Tag` de `vercel.json` (ils cachent le site à Google tant que les infos ne
+  sont pas confirmées) ;
 - ajouter `<link rel="canonical">` dans `index.html` avec le nom de domaine final ;
 - compléter les `TODO-OWNER` (horaires, date d'ouverture, mentions légales).
