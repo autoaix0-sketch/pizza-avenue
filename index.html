@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Pizza Avenue — Fast food · Good mood</title>
-<meta name="description" content="Pizza, burgers, tacos français et tex-mex faits à la commande. Pâte pétrie sur place, viande grillée minute. Pizza Avenue — fast food, good mood.">
+<title>Pizza Avenue — Pizzeria halal à emporter à Dax</title>
+<meta name="description" content="Pizza Avenue, pizzeria halal à emporter à Dax : 20 pizzas à pâte fraîche (taille unique, de 8 à 12 €), calzone, panizza, makloub, kapsalon, tex-mex. 75 av. Saint-Vincent de Paul. 09 66 13 03 02.">
 <link rel="canonical" href="https://pizza-avenue.example/">
 
 <meta property="og:type" content="restaurant">
 <meta property="og:site_name" content="Pizza Avenue">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:title" content="Pizza Avenue — Fast food · Good mood">
-<meta property="og:description" content="Pizza, burgers, tacos français et tex-mex faits à la commande.">
+<meta property="og:title" content="Pizza Avenue — Pizzeria halal à emporter à Dax">
+<meta property="og:description" content="Bonjour Dax. Ciao la faim. Pâte fraîche, taille unique, menu halal. Commande par téléphone : 09 66 13 03 02.">
 <meta property="og:image" content="/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F8F1DF">
@@ -173,6 +173,7 @@
 
   <nav class="topbar__nav" id="siteNav" aria-label="Navigation">
     <a href="#menu" data-i18n="nav.menu">La carte</a>
+    <a href="#formules" data-i18n="nav.formules">Formules</a>
     <a href="#maison" data-i18n="nav.maison">La maison</a>
     <a href="#avis" data-i18n="nav.avis">Les avis</a>
     <a href="#venir" data-i18n="nav.venir">Nous trouver</a>
@@ -242,7 +243,7 @@
               <defs><path id="badgeCircle" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
               <circle cx="60" cy="60" r="58" fill="var(--forest)"/>
               <circle cx="60" cy="60" r="53" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="2 3"/>
-              <g class="hero-badge__ring"><text font-family="var(--font-display)" font-weight="800" font-size="10" fill="var(--cream)" letter-spacing="1"><textPath href="#badgeCircle" textLength="280" lengthAdjust="spacing" data-i18n="hero.badge">FAIT MAISON ✦ SERVI CHAUD ✦</textPath></text></g>
+              <g class="hero-badge__ring"><text font-family="var(--font-display)" font-weight="800" font-size="10" fill="var(--cream)" letter-spacing="1"><textPath href="#badgeCircle" textLength="280" lengthAdjust="spacing" data-i18n="hero.badge">PÂTE FRAÎCHE ✦ MENU HALAL ✦ DAX ✦</textPath></text></g>
               <use href="#mark-dome" x="37" y="47" width="46" height="24"/>
             </svg>
           </div>
@@ -259,18 +260,18 @@
           <svg class="hero-stage__swash" id="heroSwash" viewBox="0 0 260 30">
             <path id="heroSwashPath" d="M6,18 C 40,6 90,26 130,14 C 170,4 210,22 254,10"/>
           </svg>
-          <p class="hero-stage__tagline" id="heroTagline">Fast food &middot; Good mood</p>
+          <p class="hero-stage__tagline" id="heroTagline" data-i18n="brand.h">Une faim de caractère.</p>
         </div>
 
         <div class="hero-copy-wrap">
           <div class="hero-copy" id="heroCopy">
-            <p class="hero-copy__kicker" data-i18n="hero.kicker">Pizza · Burgers · Tacos · Tex-Mex</p>
+            <p class="hero-copy__kicker" data-i18n="hero.kicker">Pizzeria halal · À emporter · Dax</p>
             <h1>
-              <span data-i18n="hero.t1">Bonne bouffe.</span>
-              <span class="script" data-i18n="hero.t2">Bonne humeur.</span>
-              <span class="hero-copy__sub" data-i18n="hero.t3">Tous les jours.</span>
+              <span data-i18n="hero.t1">Bonjour Dax.</span>
+              <span class="script" data-i18n="hero.t2">Ciao la faim.</span>
+              <span class="hero-copy__sub" data-i18n="hero.t3">Pizzas à emporter.</span>
             </h1>
-            <p class="hero-copy__lede" data-i18n-html="hero.lede">Pâte pétrie sur place, viande grillée à la commande, sauces maison. <strong>Toujours vite, jamais bâclé.</strong></p>
+            <p class="hero-copy__lede" data-i18n-html="hero.lede">Pâte fraîche, taille unique, menu halal. <strong>75 av. Saint-Vincent de Paul, Dax.</strong></p>
             <a class="btn" href="#menu"><span data-i18n="hero.cta">Voir la carte</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
           </div>
         </div>
@@ -289,13 +290,13 @@
          filigrane en haut de la scène (phase 5 de src/js/hero/timeline.js),
          passe derrière elle en défilant. -->
     <div class="wrap">
-      <h2 class="brand-moment__title script" data-reveal>Real food. Good mood.</h2>
-      <p data-reveal data-i18n="brand.p">Pizza Avenue est né d’une idée simple : le fast-food peut être fait avec soin, sans perdre en vitesse ni en plaisir. Quatre cuisines, une seule exigence.</p>
+      <h2 class="brand-moment__title script" data-reveal data-i18n="brand.h">Une faim de caractère.</h2>
+      <p data-reveal data-i18n="brand.p">Pizza Avenue, c’est la pizzeria halal à emporter de Dax : une pâte fraîche, des pizzas bien garnies, des prix simples. Et aussi calzone, panizza, makloub, kapsalon et tex-mex.</p>
 
       <ul class="brand-moment__badges" data-reveal>
         <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-pizza"/></svg>Pizza</li>
-        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-burger"/></svg>Burgers</li>
-        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-taco"/></svg>Tacos</li>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-sparkle"/></svg>Halal</li>
+        <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-leaf"/></svg>Pâte fraîche</li>
         <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-texmex"/></svg>Tex-Mex</li>
       </ul>
     </div>
@@ -304,7 +305,7 @@
   <!-- Le bandeau : une bande de scotch en travers de la page, qui défile. -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__tape">
-      <div class="marquee__track"><span>Pizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">fait maison</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Burgers</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">servi chaud</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tacos</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">good mood</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Pizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">fait maison</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Burgers</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">servi chaud</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tacos</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">good mood</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg></div>
+      <div class="marquee__track"><span>Pizzas</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">pâte fraîche</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Makloub</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">menu halal</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Kapsalon</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">gratiné au four</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">taille unique</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Calzone</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Panizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">Ciao la faim</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg></div>
     </div>
   </div>
 
@@ -313,23 +314,22 @@
     <div class="wrap">
       <p class="eyebrow"><b>01</b> <span data-i18n="menu.eyebrow">La carte</span></p>
       <div class="menu__head">
-        <h2 data-i18n-html="menu.h2">Quatre routes, <em>une avenue</em></h2>
-        <p data-i18n="menu.intro">Tout est préparé à la commande. Les prix sont les mêmes sur place et à emporter.</p>
+        <h2 data-i18n-html="menu.h2">Une avenue <em>de goûts</em></h2>
+        <p data-i18n="menu.intro">Menu halal · Pâte fraîche · Taille unique. Les numéros sont ceux de la boutique : commandez par numéro au téléphone.</p>
       </div>
 
       <!-- Rempli par src/js/menu.js depuis src/data/menu.js -->
       <div class="menu__rows"></div>
-      <div class="menu__extras"></div>
     </div>
   </section>
 
   <!-- ============================================================= 04 formules -->
   <section class="formules section-pad" id="formules">
     <div class="wrap">
-      <p class="eyebrow"><b>02</b> <span data-i18n="formules.eyebrow">Les formules</span></p>
+      <p class="eyebrow"><b>02</b> <span data-i18n="formules.eyebrow">Formules &amp; offres</span></p>
       <div class="menu__head">
-        <h2 data-i18n-html="formules.h2">Nos formules <em>signature</em></h2>
-        <p data-i18n="formules.intro">Des menus pensés pour être partagés — ou pas. Prix fixes, sur place et à emporter.</p>
+        <h2 data-i18n-html="formules.h2">Les bons <em>plans</em></h2>
+        <p data-i18n="formules.intro">Les offres de la carte, tout simplement.</p>
       </div>
 
       <!-- Les affiches, construites par src/js/posters.js depuis
@@ -345,20 +345,20 @@
       <div data-reveal>
         <p class="eyebrow"><b>03</b> <span data-i18n="maison.eyebrow">La maison</span></p>
         <h2 data-i18n-html="maison.h2">Un comptoir, <em>pas une chaîne</em></h2>
-        <p data-i18n="maison.p1">On a ouvert avenue pour faire une chose correctement : une pâte pétrie sur place, une viande grillée au moment où vous la commandez, des sauces qu’on fait nous-mêmes.</p>
-        <p data-i18n="maison.p2">Pas de raccourci, pas de surgelé qui traîne, pas quarante minutes d’attente. Vous commandez, on prépare, c’est prêt.</p>
+        <p data-i18n="maison.p1">Pizza Avenue est une pizzeria à emporter au 75 avenue Saint-Vincent de Paul, à Dax. Une carte claire : 20 pizzas, calzone, panizza, makloub, kapsalon et tex-mex.</p>
+        <p data-i18n="maison.p2">Vous appelez, vous passez, vous repartez avec. Des pizzas qui rassemblent toujours !</p>
 
         <ul class="maison__proofs">
-          <li><span>01</span><div><b data-i18n="proof.1.t">La pâte, tous les jours</b><p data-i18n="proof.1.d">Pétrie et poussée sur place, jamais la veille.</p></div></li>
-          <li><span>02</span><div><b data-i18n="proof.2.t">Servi vite, servi chaud</b><p data-i18n="proof.2.d">Chaque plat part du grill ou du four à la commande.</p></div></li>
-          <li><span>03</span><div><b data-i18n="proof.3.t">Quatre cuisines, un seul comptoir</b><p data-i18n="proof.3.d">Pizza, burgers, tacos, tex-mex — sans compromis sur aucune.</p></div></li>
+          <li><span>01</span><div><b data-i18n="proof.1.t">Pâte fraîche</b><p data-i18n="proof.1.d">Chaque pizza part d’une pâte fraîche.</p></div></li>
+          <li><span>02</span><div><b data-i18n="proof.2.t">Menu halal</b><p data-i18n="proof.2.d">Toute la carte est halal.</p></div></li>
+          <li><span>03</span><div><b data-i18n="proof.3.t">Taille unique, prix simples</b><p data-i18n="proof.3.d">Une seule taille, de 8 à 12 € la pizza.</p></div></li>
         </ul>
       </div>
 
       <figure class="maison__shot" data-reveal>
         <!-- Rempli par src/js/posters.js (clé maison_scene du manifeste) -->
         <div class="maison__photo" id="maisonPhoto"></div>
-        <figcaption class="maison__caption"><span class="script" data-i18n="maison.caption">cuite minute, chaque jour</span></figcaption>
+        <figcaption class="maison__caption"><span class="script" data-i18n="maison.caption">pâte fraîche, taille unique</span></figcaption>
         <svg class="maison__shot-deco" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-sparkle"/></svg>
       </figure>
     </div>
@@ -407,7 +407,7 @@
             </div>
             <div class="info-row">
               <dt data-i18n="venir.service">Service</dt>
-              <dd data-i18n="venir.service.v">Sur place et à emporter. Commande par téléphone.</dd>
+              <dd data-i18n="venir.service.v">À emporter. Commande par téléphone.</dd>
             </div>
           </dl>
 
@@ -434,8 +434,8 @@
   <section class="cta">
     <p class="eyebrow"><span data-i18n="cta.eyebrow">Pour finir</span></p>
     <h2><span class="script" data-i18n="cta.h2">On se voit sur l’avenue.</span></h2>
-    <p data-i18n="cta.p">Appelez, passez, repartez avec. C’est toute la promesse.</p>
-    <a class="btn" id="ctaOrder" href="#venir"><span data-i18n="cta.order">Commander maintenant</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+    <p data-i18n="cta.p">Appelez, passez, repartez avec.</p>
+    <a class="btn" id="ctaOrder" href="#venir"><span data-i18n="cta.order">Commander par téléphone</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-arrow"/></svg></a>
     <div class="cta__pizza" id="ctaPizza" aria-hidden="true"></div>
     <svg class="cta__road" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><use href="#road-path"/></svg>
   </section>
@@ -458,7 +458,7 @@
       </p>
 
       <div>
-        <p class="footer__tagline" data-i18n="foot.tagline">Fast food · Good mood</p>
+        <p class="footer__tagline" data-i18n="foot.tagline">Des pizzas qui rassemblent toujours !</p>
         <p id="footAddress"></p>
       </div>
 
@@ -470,7 +470,7 @@
     </div>
 
     <p class="footer__legal">
-      <span data-i18n="foot.legal">© 2026 Pizza Avenue</span>
+      <span data-i18n="foot.legal">© 2026 Pizza Avenue · Dax</span>
     </p>
   </div>
 </footer>

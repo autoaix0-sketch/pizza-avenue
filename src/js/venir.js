@@ -22,12 +22,18 @@ export function renderContact() {
 
   const hoursEl = document.getElementById('venirHours');
   if (hoursEl) {
-    hoursEl.innerHTML = site.hours.services.map((s) => `<span>${hhmm(s[0])} – ${hhmm(s[1])}</span>`).join('');
+    const services = site.hours.services || [];
+    hoursEl.innerHTML = services.map((s) => `<span>${hhmm(s[0])} – ${hhmm(s[1])}</span>`).join('');
+    /* Horaires pas encore connus (TODO-OWNER dans site.js) : on masque la ligne. */
+    const row = hoursEl.closest('.info-row');
+    if (row) row.hidden = !services.length;
   }
 
   const routeEl = document.getElementById('venirRoute');
-  if (routeEl && site.address.lat) {
-    routeEl.href = `https://www.google.com/maps/dir/?api=1&destination=${site.address.lat},${site.address.lng}`;
+  if (routeEl) {
+    routeEl.href = site.address.lat
+      ? `https://www.google.com/maps/dir/?api=1&destination=${site.address.lat},${site.address.lng}`
+      : (site.address.mapsUrl || '#');
   }
 
   const footAddr = document.getElementById('footAddress');

@@ -63,8 +63,8 @@ export function renderPosters() {
         `<h3 class="poster__title">${posterTitle(pick(c.title))}</h3>` +
         `<div class="poster__shots">${(c.shots || []).map((s) => shot(s, '')).join('')}</div>` +
         '<div class="poster__sticker">' +
-          `<span>${escapeHtml(t('poster.price'))}</span>` +
-          `<b>${escapeHtml(posterPrice(c.price, lang))}</b>` +
+          `<span>${escapeHtml(t(c.plus ? 'poster.plus' : 'poster.price'))}</span>` +
+          `<b>${c.plus ? '+' : ''}${escapeHtml(posterPrice(c.price, lang))}</b>` +
         '</div>' +
         '<footer class="poster__foot">' +
           `<p>${escapeHtml(pick(c.includes))}</p>` +

@@ -1,60 +1,58 @@
 /* =========================================================================
-   PIZZA AVENUE — informations de l'établissement
+   PIZZA AVENUE — informations de l'établissement (Dax)
    =========================================================================
 
-   TOUT CE QUI EST MARQUÉ "TODO-OWNER" EST UN PLACEHOLDER.
-   Pizza Avenue est un concept de marque : ces informations ne sont pas
-   celles d'un restaurant réel. Avant toute mise en ligne, le propriétaire
-   doit remplacer chaque valeur ci-dessous par les vraies coordonnées.
-
-   Rien de cette page ne doit être publié tel quel comme fiche d'un
-   établissement existant.
+   Source : sites/PIZZA AVENUE_V2/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/
+   00_content/SITE_FACTS.md. Ce qui manque encore est marqué "TODO-OWNER".
    ========================================================================= */
 
 window.PIZZA_AVENUE_SITE = {
   brand: {
     name: "Pizza Avenue",
-    tagline: "Fast food · Good mood"
+    tagline: "Une faim de caractère."
   },
 
-  /* TODO-OWNER — adresse réelle du restaurant */
+  /* Bandeau « Ouverture prochaine » en haut de la page.
+     true = affiché, false = masqué.
+     TODO-OWNER — passer à false le jour de l'ouverture (date à confirmer, M43). */
+  openingSoon: true,
+
   address: {
-    street: "12 Avenue de la Cuisine",
-    city: "Votre ville",
-    postalCode: "00000",
-    region: "France",
+    street: "75 Av. Saint-Vincent de Paul",
+    city: "Dax",
+    postalCode: "40100",
+    region: "Landes",
     country: "FR",
-    mapsUrl: "https://www.google.com/maps",
+    mapsUrl: "https://maps.app.goo.gl/1YcMSX9xrhdtXAe47",
+    /* TODO-OWNER — coordonnées GPS exactes (facultatif). Vides : le bouton
+       « Itinéraire » ouvre simplement le lien Google Maps ci-dessus. */
     lat: 0,
     lng: 0
   },
 
-  /* TODO-OWNER — téléphone réel, format humain + lien tel: */
   phone: {
-    human: "00 00 00 00 00",
-    link: "+330000000000"
+    human: "09 66 13 03 02",
+    link: "+33966130302"
   },
 
-  /* TODO-OWNER — horaires réels. Même format que Taco Naan : minutes depuis
-     minuit, converties par src/js/hours.js. */
+  /* TODO-OWNER — horaires réels (M40). Minutes depuis minuit, par service :
+       services: [[11 * 60 + 30, 14 * 60], [18 * 60, 22 * 60 + 30]]
+     Tant que la liste est vide, la ligne « Horaires » et le badge
+     Ouvert / Fermé restent masqués. */
   hours: {
-    services: [
-      [11 * 60 + 30, 14 * 60 + 30],
-      [18 * 60 + 30, 22 * 60 + 30]
-    ],
+    services: [],
     timezone: "Europe/Paris"
   },
 
-  /* TODO-OWNER — liens réels. Laisser vide ("") retire le bouton du footer. */
+  /* Commande : par téléphone uniquement. Laisser vide ("") = pas de bouton. */
   links: {
-    instagram: "",
+    instagram: "https://www.instagram.com/pizzavenue40100/",
     googleReviews: "",
     orderOnline: ""
   },
 
-  /* TODO-OWNER — note et nombre d'avis Google réels, une fois la fiche
-     établie. À zéro pour l'instant : la section avis reste masquée tant que
-     ces valeurs ne sont pas renseignées (voir src/js/sections.js). */
+  /* Pas d'avis pour l'instant : à zéro, la section « Les avis » reste
+     masquée (voir src/js/sections.js: initReviewsVisibility). */
   reviews: {
     rating: 0,
     count: 0,

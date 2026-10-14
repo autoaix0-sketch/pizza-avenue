@@ -1,42 +1,86 @@
 /* =========================================================================
    PIZZA AVENUE — la carte
    =========================================================================
-   Système visuel plutôt qu'une grille de cartes : quatre lignes éditoriales
-   plein cadre (numéro, nom, image, accroche), chacune dépliable au clic pour
-   révéler les prix. La logique de prix (tiers / colonnes / notes) reprend
-   fidèlement celle de Taco Naan (assets/js/site.js: menuLine / renderMenu),
-   seule la présentation change.
+   Des lignes éditoriales plein cadre (numéro, nom, image, accroche), chacune
+   dépliable au clic pour révéler les plats. Taille unique : un prix par
+   plat. Les pizzas ont un sélecteur Base tomate / Base crème / Spéciales ;
+   les autres catégories montrent leurs « au choix » en pastilles et leurs
+   suppléments. Tout vient de src/data/menu.js.
    ========================================================================= */
 
 import { t, pick, currentLang } from './i18n.js';
 import { escapeHtml, money, picture } from './utils.js';
 
-function menuLine(item, columns, lang) {
+function menuLine(item, lang) {
   const note = item.note
     ? `<span class="ticket__note">${escapeHtml(pick(item.note))}</span>`
     : '';
-  const head = '<span class="ticket__label">' +
-    `<span class="ticket__text"><span class="ticket__name">${escapeHtml(item.name)}</span>${note}</span>` +
+  const num = item.num != null ? `<span class="ticket__num">${item.num}</span>` : '';
+  const star = item.special
+    ? `<span class="ticket__star" role="img" aria-label="${escapeHtml(t('menu.special'))}">★</span>`
+    : '';
+  const head = '<span class="ticket__label">' + num +
+    `<span class="ticket__text"><span class="ticket__name">${escapeHtml(pick(item.name))}${star}</span>${note}</span>` +
     '</span>';
-
-  if (item.tiers) {
-    const cells = columns.map((i) => {
-      const value = item.tiers[i];
-      return `<span class="ticket__cell">${value == null ? '<i>—</i>' : escapeHtml(money(value, lang))}</span>`;
-    }).join('');
-    return `<li class="ticket__row">${head}<span class="ticket__cells">${cells}</span></li>`;
-  }
-
-  const solo = item.free
-    ? `<span class="ticket__price ticket__price--free">${escapeHtml(t('free') || 'offert')}</span>`
-    : (item.price != null
-        ? `<span class="ticket__price">${escapeHtml(money(item.price, lang))}</span>`
-        : '');
-  return `<li class="ticket__row ticket__row--solo">${head}<span class="ticket__lead"></span>${solo}</li>`;
+  const price = item.price != null
+    ? `<span class="ticket__price">${escapeHtml(money(item.price, lang))}</span>`
+    : '';
+  return `<li class="ticket__row ticket__row--solo">${head}<span class="ticket__lead"></span>${price}</li>`;
 }
 
+function itemList(items, lang) {
+  return `<ul class="ticket__list">${items.map((it) => menuLine(it, lang)).join('')}</ul>`;
+}
+
+function choicesBlock(cat) {
+  if (!cat.choices) return '';
+  return cat.choices.map((c) => (
+    '<div class="menu-choices">' +
+      `<span class="menu-choices__label">${escapeHtml(pick(c.label))}</span>` +
+      '<ul class="chips">' +
+        c.options.map((o) => `<li>${escapeHtml(pick(o))}</li>`).join('') +
+      '</ul>' +
+    '</div>'
+  )).join('');
+}
+
+function extrasBlock(cat, lang) {
+  if (!cat.extras) return '';
+  return `<p class="menu-extras__title">${escapeHtml(t('menu.extras'))}</p>` +
+    '<ul class="extras__list">' +
+    cat.extras.map((x) => (
+      `<li><span class="extras__name">${escapeHtml(pick(x.label))}</span>` +
+      '<span class="extras__lead" aria-hidden="true"></span>' +
+      `<span class="extras__price">+ ${escapeHtml(money(x.price, lang))}</span></li>`
+    )).join('') +
+    '</ul>';
+}
+
+/* Pas de photo pour la catégorie (Panizza, Desserts, Boissons) : une icône
+   dessinée prend la place, pour garder le rythme des lignes. */
 function categoryArt(cat) {
-  return picture(cat.image, cat.name, '(min-width: 62rem) 11rem, 7rem');
+  return picture(cat.image, pick(cat.name), '(min-width: 62rem) 11rem, 7rem') ||
+    '<svg class="menu-row__icon" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-pizza"/></svg>';
+}
+
+/* Sélecteur de groupe (pizzas). Le groupe choisi survit à un nouveau rendu. */
+const activeGroup = {};
+
+function groupsBlock(cat, lang) {
+  const current = activeGroup[cat.id] || cat.groups[0].id;
+  const tabs = '<div class="menu-switch" role="tablist">' +
+    cat.groups.map((g) => (
+      `<button type="button" role="tab" class="menu-switch__btn" data-group="${escapeHtml(g.id)}"` +
+      ` aria-selected="${g.id === current}" aria-controls="menu-group-${escapeHtml(g.id)}">` +
+      `${escapeHtml(pick(g.label))} <span class="menu-switch__count">${g.items.length}</span></button>`
+    )).join('') +
+    '</div>';
+  const lists = cat.groups.map((g) => (
+    `<div class="menu-group" id="menu-group-${escapeHtml(g.id)}" role="tabpanel"${g.id === current ? '' : ' hidden'}>` +
+      itemList(g.items, lang) +
+    '</div>'
+  )).join('');
+  return tabs + lists;
 }
 
 /* Les lignes ouvertes survivent à un nouveau rendu (changement de langue).
@@ -48,64 +92,53 @@ let openRowsSeeded = false;
 export function renderMenu() {
   const menu = window.PIZZA_AVENUE_MENU;
   const rows = document.querySelector('.menu__rows');
-  const extrasEl = document.querySelector('.menu__extras');
   if (!menu || !rows) return;
 
   const lang = currentLang();
-  const labels = (menu.tierLabels && menu.tierLabels[lang]) || (menu.tierLabels && menu.tierLabels.fr) || [];
   if (!openRowsSeeded && menu.categories.length) {
     openRows.add(menu.categories[0].id);
     openRowsSeeded = true;
   }
 
   rows.innerHTML = menu.categories.map((cat) => {
-    const columns = cat.tiersOnly || [0, 1, 2];
-    const catLabels = (cat.tierLabels && (cat.tierLabels[lang] || cat.tierLabels.fr)) || labels;
-
-    const header = `<li class="ticket__head"><span></span><span class="ticket__cells">` +
-      columns.map((i) => `<span class="ticket__cell">${escapeHtml(catLabels[i] || '')}</span>`).join('') +
-      '</span></li>';
-
-    const lines = cat.items.map((it) => menuLine(it, columns, lang)).join('');
     const panelId = `menu-panel-${cat.id}`;
     const isOpen = openRows.has(cat.id);
+    const body = cat.groups ? groupsBlock(cat, lang) : itemList(cat.items, lang);
 
     return `<article class="menu-row" data-cat="${escapeHtml(cat.id)}" data-reveal>` +
       `<button class="menu-row__toggle" type="button" aria-expanded="${isOpen}" aria-controls="${panelId}">` +
         `<span class="menu-row__num">${escapeHtml(cat.num)}</span>` +
         `<span class="menu-row__title">` +
-          `<span class="menu-row__name">${escapeHtml(cat.name)}</span>` +
+          `<span class="menu-row__name">${escapeHtml(pick(cat.name))}</span>` +
           `<span class="menu-row__tagline">${escapeHtml(pick(cat.tagline))}</span>` +
         '</span>' +
         `<span class="menu-row__art">${categoryArt(cat)}</span>` +
         '<svg class="menu-row__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
       '</button>' +
-      /* La note « le menu comprend… » ne vaut que pour les catégories qui
-         suivent la formule Seul / + Frite / + Menu. Pizza a ses propres
-         intitulés (Sénior / Familiale) : la note ne s'applique pas. */
       `<div class="menu-row__panel" id="${panelId}"${isOpen ? '' : ' hidden'}>` +
-        (cat.tierLabels ? '' : `<p class="menu-row__note">${escapeHtml(pick(menu.tierNote))}</p>`) +
-        `<ul class="ticket__list">${header}${lines}</ul>` +
+        body + choicesBlock(cat) + extrasBlock(cat, lang) +
       '</div>' +
     '</article>';
   }).join('');
-
-  if (extrasEl && menu.extras) {
-    extrasEl.innerHTML = `<h3>${escapeHtml(pick(menu.extras.title))}</h3>` +
-      '<ul class="extras__list">' +
-      menu.extras.items.map((it) => (
-        `<li><span class="extras__name">${escapeHtml(it.name)}</span>` +
-        '<span class="extras__lead" aria-hidden="true"></span>' +
-        `<span class="extras__price">${escapeHtml(money(it.price, lang))}</span></li>`
-      )).join('') +
-      '</ul>';
-  }
 }
 
 export function wireMenuRows() {
   const rows = document.querySelector('.menu__rows');
   if (!rows) return;
   rows.addEventListener('click', (event) => {
+    const tab = event.target.closest('.menu-switch__btn');
+    if (tab) {
+      const row = tab.closest('.menu-row');
+      activeGroup[row.dataset.cat] = tab.dataset.group;
+      row.querySelectorAll('.menu-switch__btn').forEach((b) => {
+        b.setAttribute('aria-selected', String(b === tab));
+      });
+      row.querySelectorAll('.menu-group').forEach((g) => {
+        g.hidden = g.id !== `menu-group-${tab.dataset.group}`;
+      });
+      return;
+    }
+
     const btn = event.target.closest('.menu-row__toggle');
     if (!btn) return;
     const row = btn.closest('.menu-row');

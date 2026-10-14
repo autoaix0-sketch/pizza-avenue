@@ -55,6 +55,11 @@ export function openState(services, timeZone) {
 }
 
 export function paintStatus(services, timeZone) {
+  /* Horaires pas encore connus : pas de badge Ouvert / Fermé. */
+  if (!services || !services.length) {
+    document.querySelectorAll('[data-status]').forEach((node) => { node.hidden = true; });
+    return;
+  }
   const state = openState(services, timeZone);
   document.querySelectorAll('[data-status]').forEach((node) => {
     node.className = 'status ' + (state.open ? 'status--open' : 'status--closed');
