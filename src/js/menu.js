@@ -152,8 +152,6 @@ export function renderMenu() {
     openRowsSeeded = true;
   }
 
-  const tierNote = menu.tierNote ? pick(menu.tierNote) : '';
-
   rows.innerHTML = categories.map((cat) => {
     const panelId = `menu-panel-${cat.id}`;
     const isOpen = openRows.has(cat.id);
@@ -162,6 +160,11 @@ export function renderMenu() {
     const hasTiers = cat.groups
       ? cat.groups.some((g) => columnsOf(g.items))
       : columnsOf(cat.items) > 0;
+    /* La précision sous les prix « Seul / Menu » : celle de la catégorie
+       (« avec une boisson » pour le kapsalon, « avec frites et boisson » pour le
+       makeloub), sinon celle de la carte entière s'il y en a une. */
+    const noteSource = cat.tierNote || menu.tierNote;
+    const tierNote = noteSource ? pick(noteSource) : '';
     const note = hasTiers && tierNote ? `<p class="menu-row__note">${escapeHtml(tierNote)}</p>` : '';
 
     return `<article class="menu-row" data-cat="${escapeHtml(cat.id)}" data-reveal>` +

@@ -6,11 +6,6 @@
 window.PIZZA_AVENUE_MENU = {
   "pricesConfirmed": true,
   "tierLabels": { "fr": ["Seul", "Menu"], "es": ["Solo", "Menú"], "en": ["Only", "Meal deal"] },
-  "tierNote": {
-    "fr": "Menu : avec frites et boisson.",
-    "es": "Menú: con patatas y bebida.",
-    "en": "Meal deal: with fries and a drink."
-  },
   "categories": [
     {
       "id": "pizza",
@@ -341,6 +336,11 @@ window.PIZZA_AVENUE_MENU = {
         "es": "Mozzarella y pimientos asados.",
         "en": "Mozzarella and grilled peppers."
       },
+      "tierNote": {
+        "fr": "Menu : avec frites et boisson.",
+        "es": "Menú: con patatas y bebida.",
+        "en": "Meal deal: with fries and a drink."
+      },
       "items": [
         {
           "name": "Makeloub",
@@ -373,6 +373,11 @@ window.PIZZA_AVENUE_MENU = {
         "fr": "Gratiné au four façon pizza.",
         "es": "Gratinado al horno como una pizza.",
         "en": "Baked in the oven, pizza style."
+      },
+      "tierNote": {
+        "fr": "Menu : avec une boisson.",
+        "es": "Menú: con una bebida.",
+        "en": "Meal deal: with a drink."
       },
       "items": [
         {
@@ -415,6 +420,11 @@ window.PIZZA_AVENUE_MENU = {
         "fr": "Pâte à pizza soufflée, bien fourrée.",
         "es": "Masa de pizza inflada, bien rellena.",
         "en": "Puffed pizza dough, generously filled."
+      },
+      "tierNote": {
+        "fr": "Menu : avec une boisson.",
+        "es": "Menú: con una bebida.",
+        "en": "Meal deal: with a drink."
       },
       "items": [
         {
