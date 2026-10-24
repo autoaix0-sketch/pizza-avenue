@@ -1,6 +1,8 @@
+/* La carte, les horaires, les offres et les photos envoyées sont des fichiers
+   JSON dans public/data/, chargés par index.html avant ce module : le tableau
+   de bord les réécrit sans reconstruire le code. */
 import './data/site.js';
 import './data/manifest.js';
-import './data/menu.js';
 
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/600.css';
@@ -15,9 +17,9 @@ import './styles/hero.css';
 import './styles/sections.css';
 
 import { applyLanguage, initialLanguage, wireLanguage, onLanguageChange } from './js/i18n.js';
-import { paintStatus } from './js/hours.js';
+import { paintStatus, renderHours } from './js/hours.js';
 import { renderMenu, wireMenuRows } from './js/menu.js';
-import { renderContact, wireMap } from './js/venir.js';
+import { renderContact, renderBanner, wireMap } from './js/venir.js';
 import { renderPosters } from './js/posters.js';
 import { initReveals, initNavScrim, initReviewsVisibility, numberSections, initMobileNav } from './js/sections.js';
 import { initHero } from './js/hero/timeline.js';
@@ -46,7 +48,10 @@ function boot(photoUrl) {
   onLanguageChange(() => {
     renderMenu();
     renderPosters();
-    if (site) paintStatus(site.hours.services, site.hours.timezone);
+    renderHours();
+    renderBanner();
+    paintStatus();
+    numberSections(); // la section « offres » disparaît quand il n'y en a pas
     initReveals();
   });
 
@@ -56,7 +61,6 @@ function boot(photoUrl) {
   initNavScrim();
   initMobileNav();
   initReviewsVisibility();
-  numberSections();
   renderContact();
   enrichRestaurantLd();
 
@@ -64,9 +68,8 @@ function boot(photoUrl) {
   initHero({ reduced, hasPhoto: !!photoUrl });
   document.getElementById('heroStage')?.classList.add('is-ready');
 
-  if (site) {
-    setInterval(() => paintStatus(site.hours.services, site.hours.timezone), 60000);
-  }
+  /* Le badge ouvert / fermé et l'avis de fermeture se mettent à jour seuls. */
+  setInterval(() => { paintStatus(); renderBanner(); }, 60000);
 }
 
 /* Le héros ne démarre qu'une fois les polices ET la photo prêtes : le

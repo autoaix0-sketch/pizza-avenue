@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 
 <title>Pizza Avenue — Pizzeria halal à emporter à Dax</title>
-<meta name="description" content="Pizza Avenue, pizzeria halal à emporter à Dax : 20 pizzas à pâte fraîche (taille unique, de 8 à 12 €), calzone, panizza, makloub, kapsalon, tex-mex. 75 av. Saint-Vincent de Paul. 09 66 13 03 02.">
+<meta name="description" content="Pizza Avenue, pizzeria halal à emporter à Dax : 21 pizzas à pâte fraîche (taille unique 31 cm, de 9 à 12,50 €), calzone, panizza, makeloub (makloub), kapsalon, tacos soufflé, tex-mex. 75 av. Saint-Vincent de Paul. 09 66 13 03 02.">
 <!-- TODO-OWNER — ajouter <link rel="canonical"> quand le nom de domaine sera choisi. -->
 
 <meta property="og:type" content="restaurant">
@@ -26,7 +26,7 @@
 <!--
   Fiche Restaurant (schema.org). La base ci-dessous (nom, adresse, téléphone)
   est complétée au chargement par src/js/seo.js depuis src/data/site.js et
-  src/data/menu.js (carte et prix, horaires quand ils existent) : une seule
+  public/data/menu.js (carte et prix) et public/data/hours.js (horaires) : une seule
   source pour les prix. Volontairement SANS aggregateRating tant qu'il n'y a
   pas de vrais avis.
 -->
@@ -158,12 +158,15 @@
   </defs>
 </svg>
 
-<!-- Bandeau « Ouverture prochaine » : affiché si openingSoon = true dans
-     src/data/site.js (voir src/js/venir.js: renderBanner). -->
+<!-- Bandeau du haut (voir src/js/venir.js: renderBanner) :
+     - fermeture exceptionnelle (public/data/hours.js), avec un bouton pour la fermer ;
+     - sinon « Ouverture prochaine », si openingSoon = true dans src/data/site.js. -->
 <div class="openbar" id="openBanner" hidden>
-  <span data-i18n="banner.text">Ouverture prochaine.</span>
-  <span class="openbar__follow" data-i18n="banner.follow">Suivez-nous sur Instagram</span>
-  <a id="openBannerLink" href="https://www.instagram.com/pizzavenue40100/" target="_blank" rel="noopener">@pizzavenue40100</a>
+  <span data-banner="soon" data-i18n="banner.text">Ouverture prochaine.</span>
+  <span class="openbar__follow" data-banner="soon" data-i18n="banner.follow">Suivez-nous sur Instagram</span>
+  <a id="openBannerLink" data-banner="soon" href="https://www.instagram.com/pizzavenue40100/" target="_blank" rel="noopener">@pizzavenue40100</a>
+  <span id="closureText" data-banner="closure" hidden></span>
+  <button class="openbar__close" type="button" data-banner="closure" data-i18n-aria="close" aria-label="Fermer" hidden>×</button>
 </div>
 
 <!-- ======================================================= barre supérieure -->
@@ -295,7 +298,7 @@
          passe derrière elle en défilant. -->
     <div class="wrap">
       <h2 class="brand-moment__title script" data-reveal data-i18n="brand.h">Une faim de caractère.</h2>
-      <p data-reveal data-i18n="brand.p">Pizza Avenue, c’est la pizzeria halal à emporter de Dax : une pâte fraîche, des pizzas bien garnies, des prix simples. Et aussi calzone, panizza, makloub, kapsalon et tex-mex.</p>
+      <p data-reveal data-i18n="brand.p">Pizza Avenue, c’est la pizzeria halal à emporter de Dax : une pâte fraîche, des pizzas bien garnies, des prix simples. Et aussi calzone, panizza, makeloub, kapsalon, tacos soufflé et tex-mex.</p>
 
       <ul class="brand-moment__badges" data-reveal>
         <li class="brand-moment__badge"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-pizza"/></svg>Pizza</li>
@@ -309,7 +312,7 @@
   <!-- Le bandeau : une bande de scotch en travers de la page, qui défile. -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__tape">
-      <div class="marquee__track"><span>Pizzas</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">pâte fraîche</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Makloub</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">menu halal</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Kapsalon</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">gratiné au four</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">taille unique</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Calzone</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Panizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">Ciao la faim</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg></div>
+      <div class="marquee__track"><span>Pizzas</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">pâte fraîche</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Makeloub</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">menu halal</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Kapsalon</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">gratiné au four</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Tex-Mex</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">taille unique</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Calzone</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">sur l’avenue</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span>Panizza</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg><span class="script">Ciao la faim</span><svg viewBox="0 0 40 40"><use href="#ic-sparkle"/></svg></div>
     </div>
   </div>
 
@@ -319,10 +322,10 @@
       <p class="eyebrow"><b>01</b> <span data-i18n="menu.eyebrow">La carte</span></p>
       <div class="menu__head">
         <h2 data-i18n-html="menu.h2">Une avenue <em>de goûts</em></h2>
-        <p data-i18n="menu.intro">Menu halal · Pâte fraîche · Taille unique. Les numéros sont ceux de la boutique : commandez par numéro au téléphone.</p>
+        <p data-i18n="menu.intro">Menu halal · Pâte fraîche · Taille unique, 31 cm. Les numéros sont ceux de la boutique : commandez par numéro au téléphone.</p>
       </div>
 
-      <!-- Rempli par src/js/menu.js depuis src/data/menu.js -->
+      <!-- Rempli par src/js/menu.js depuis public/data/menu.js -->
       <div class="menu__rows"></div>
     </div>
   </section>
@@ -337,8 +340,9 @@
       </div>
 
       <!-- Les affiches, construites par src/js/posters.js depuis
-           src/data/menu.js (combos) : textes et prix restent du texte, donc
-           traduits, nets à toutes les tailles et modifiables en un endroit. -->
+           public/data/offers.js (offres en cours, géré par le tableau de bord) :
+           textes et prix restent du texte, donc traduits et nets à toutes les
+           tailles. Sans offre en cours, toute la section disparaît. -->
       <div class="posters"></div>
     </div>
   </section>
@@ -349,13 +353,13 @@
       <div data-reveal>
         <p class="eyebrow"><b>03</b> <span data-i18n="maison.eyebrow">La maison</span></p>
         <h2 data-i18n-html="maison.h2">Un comptoir, <em>pas une chaîne</em></h2>
-        <p data-i18n="maison.p1">Pizza Avenue est une pizzeria à emporter au 75 avenue Saint-Vincent de Paul, à Dax. Une carte claire : 20 pizzas, calzone, panizza, makloub, kapsalon et tex-mex.</p>
+        <p data-i18n="maison.p1">Pizza Avenue est une pizzeria à emporter au 75 avenue Saint-Vincent de Paul, à Dax. Une carte claire : 21 pizzas, calzone, panizza, makeloub, kapsalon, tacos soufflé et tex-mex.</p>
         <p data-i18n="maison.p2">Vous appelez, vous passez, vous repartez avec. Des pizzas qui rassemblent toujours !</p>
 
         <ul class="maison__proofs">
           <li><span>01</span><div><b data-i18n="proof.1.t">Pâte fraîche</b><p data-i18n="proof.1.d">Chaque pizza part d’une pâte fraîche.</p></div></li>
           <li><span>02</span><div><b data-i18n="proof.2.t">Menu halal</b><p data-i18n="proof.2.d">Toute la carte est halal.</p></div></li>
-          <li><span>03</span><div><b data-i18n="proof.3.t">Taille unique, prix simples</b><p data-i18n="proof.3.d">Une seule taille, de 8 à 12 € la pizza.</p></div></li>
+          <li><span>03</span><div><b data-i18n="proof.3.t">Taille unique, prix simples</b><p data-i18n="proof.3.d">Une seule taille (31 cm), de 9 à 12,50 € la pizza.</p></div></li>
         </ul>
       </div>
 
@@ -488,6 +492,12 @@
   </a>
 </nav>
 
+<!-- Données modifiables depuis le tableau de bord (JSON pur, public/data/).
+     Scripts classiques : ils posent leurs données avant le module ci-dessous. -->
+<script src="/data/menu.js"></script>
+<script src="/data/hours.js"></script>
+<script src="/data/offers.js"></script>
+<script src="/data/uploads.js"></script>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

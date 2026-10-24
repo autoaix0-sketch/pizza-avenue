@@ -1,13 +1,9 @@
 /* Remplit adresse / téléphone / horaires / liens depuis src/data/site.js, et
    charge la carte Google seulement au clic (aucun traceur avant). */
 
-import { pick, t } from './i18n.js';
-
-function hhmm(minutes) {
-  const h = Math.floor(minutes / 60) % 24;
-  const m = minutes % 60;
-  return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
-}
+import { t } from './i18n.js';
+import { renderHours, upcomingClosure, closureText } from './hours.js';
+import { escapeHtml } from './utils.js';
 
 export function renderContact() {
   const site = window.PIZZA_AVENUE_SITE;
@@ -20,14 +16,7 @@ export function renderContact() {
   const phoneEl = document.getElementById('venirPhone');
   if (phoneEl) { phoneEl.textContent = site.phone.human; phoneEl.href = 'tel:' + site.phone.link; }
 
-  const hoursEl = document.getElementById('venirHours');
-  if (hoursEl) {
-    const services = site.hours.services || [];
-    hoursEl.innerHTML = services.map((s) => `<span>${hhmm(s[0])} – ${hhmm(s[1])}</span>`).join('');
-    /* Horaires pas encore connus (TODO-OWNER dans site.js) : on masque la ligne. */
-    const row = hoursEl.closest('.info-row');
-    if (row) row.hidden = !services.length;
-  }
+  renderHours();
 
   const routeEl = document.getElementById('venirRoute');
   if (routeEl) {
@@ -59,22 +48,57 @@ export function renderContact() {
   const barRoute = document.getElementById('barRoute');
   if (barRoute && routeEl) barRoute.href = routeEl.href;
 
-  renderBanner(site);
+  renderBanner();
 }
 
-/* Bandeau « Ouverture prochaine » (site.openingSoon). La barre du haut se
-   pose dessous grâce à --banner-h. */
-function renderBanner(site) {
+/* Le bandeau du haut. Une fermeture exceptionnelle (aujourd'hui ou dans les
+   sept jours, public/data/hours.js) passe avant « Ouverture prochaine »
+   (site.openingSoon). Le visiteur peut fermer l'avis de fermeture ; il revient
+   si la fermeture change. La barre du haut se pose dessous grâce à --banner-h. */
+let bannerWired = false;
+
+export function renderBanner() {
+  const site = window.PIZZA_AVENUE_SITE;
   const banner = document.getElementById('openBanner');
-  if (!banner) return;
-  banner.hidden = !site.openingSoon;
+  if (!banner || !site) return;
+
+  const soonNodes = banner.querySelectorAll('[data-banner="soon"]');
+  const closureNodes = banner.querySelectorAll('[data-banner="closure"]');
+  const closureEl = document.getElementById('closureText');
+
+  const closure = upcomingClosure();
+  let dismissed = false;
+  const key = closure ? `pizzaavenue.notice.${closure.from}.${closure.to}` : '';
+  if (key) {
+    try { dismissed = sessionStorage.getItem(key) === '1'; } catch (e) { /* ignore */ }
+  }
+  const showClosure = !!closure && !dismissed;
+
+  if (showClosure) {
+    const { when, note } = closureText(closure);
+    closureEl.innerHTML = `<b>${escapeHtml(when)}</b>` + (note ? ` — ${escapeHtml(note)}` : '');
+  }
+  closureNodes.forEach((node) => { node.hidden = !showClosure; });
+  soonNodes.forEach((node) => { node.hidden = showClosure || !site.openingSoon; });
+  banner.hidden = !(showClosure || site.openingSoon);
+  banner.dataset.key = key;
+
   const link = document.getElementById('openBannerLink');
   if (link && site.links.instagram) link.href = site.links.instagram;
+
   const setHeight = () => {
     document.documentElement.style.setProperty('--banner-h', banner.hidden ? '0px' : banner.offsetHeight + 'px');
   };
   setHeight();
-  addEventListener('resize', setHeight, { passive: true });
+
+  if (!bannerWired) {
+    bannerWired = true;
+    addEventListener('resize', setHeight, { passive: true });
+    banner.querySelector('.openbar__close').addEventListener('click', () => {
+      try { sessionStorage.setItem(banner.dataset.key, '1'); } catch (e) { /* ignore */ }
+      renderBanner();
+    });
+  }
 }
 
 export function wireMap() {

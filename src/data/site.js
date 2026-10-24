@@ -2,6 +2,11 @@
    PIZZA AVENUE — informations de l'établissement (Dax)
    =========================================================================
 
+   Ici : ce qui ne change presque jamais (nom, adresse, téléphone, liens).
+   Ce que le propriétaire change depuis le tableau de bord vit dans
+   public/data/ : la carte (menu.js), les horaires (hours.js), les offres
+   (offers.js) et les photos envoyées (uploads.js).
+
    Source : sites/PIZZA AVENUE_V2/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/
    00_content/SITE_FACTS.md. Ce qui manque encore est marqué "TODO-OWNER".
    ========================================================================= */
@@ -13,9 +18,11 @@ window.PIZZA_AVENUE_SITE = {
   },
 
   /* Bandeau « Ouverture prochaine » en haut de la page.
-     true = affiché, false = masqué.
-     TODO-OWNER — passer à false le jour de l'ouverture (date à confirmer, M43). */
-  openingSoon: true,
+     true = affiché, false = masqué. Le restaurant est ouvert : false. */
+  openingSoon: false,
+
+  /* Les horaires sont dans public/data/hours.js, lus à l'heure de ce fuseau. */
+  timezone: "Europe/Paris",
 
   address: {
     street: "75 Av. Saint-Vincent de Paul",
@@ -33,15 +40,6 @@ window.PIZZA_AVENUE_SITE = {
   phone: {
     human: "09 66 13 03 02",
     link: "+33966130302"
-  },
-
-  /* TODO-OWNER — horaires réels (M40). Minutes depuis minuit, par service :
-       services: [[11 * 60 + 30, 14 * 60], [18 * 60, 22 * 60 + 30]]
-     Tant que la liste est vide, la ligne « Horaires » et le badge
-     Ouvert / Fermé restent masqués. */
-  hours: {
-    services: [],
-    timezone: "Europe/Paris"
   },
 
   /* Commande : par téléphone uniquement. Laisser vide ("") = pas de bouton. */

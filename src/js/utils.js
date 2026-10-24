@@ -6,6 +6,8 @@ export function escapeHtml(str) {
   ));
 }
 
+/* « 9,50 € ». Les centimes restent même quand ils sont ronds : une carte
+   alignée en colonnes se lit mieux avec « 9,00 € ». */
 export function money(value, lang) {
   if (value == null) return '';
   const locales = { fr: 'fr-FR', es: 'es-ES', en: 'en-GB' };
@@ -23,23 +25,31 @@ export function clamp(value, min, max) {
 }
 
 /* Construit un <picture> complet depuis le manifeste d'images optimisées
-   (window.PIZZA_AVENUE_IMAGES) : AVIF pour les navigateurs récents, WebP
-   pour tous les autres, width/height posés pour qu'aucune image ne fasse
-   sauter la page pendant son chargement. */
+   (window.PIZZA_AVENUE_IMAGES, fichiers dans assets/food/) ou depuis celui des
+   photos envoyées par le tableau de bord (window.PIZZA_AVENUE_UPLOADS, fichiers
+   dans assets/img/uploads/) : AVIF pour les navigateurs récents, WebP pour
+   tous les autres, width/height posés pour qu'aucune image ne fasse sauter la
+   page pendant son chargement. */
 export function picture(key, alt, sizes, eager) {
   const images = window.PIZZA_AVENUE_IMAGES || {};
-  const entry = images[key];
+  const uploads = window.PIZZA_AVENUE_UPLOADS || {};
+  let entry = images[key];
+  let base = 'assets/food/';
+  if (!entry && uploads[key]) {
+    entry = uploads[key];
+    base = 'assets/img/uploads/';
+  }
   if (!entry) return '';
 
   const stem = escapeHtml(entry.stem);
   const srcset = (ext) => entry.sizes.map((s) => (
-    `assets/food/${stem}-${s[0]}.${ext} ${s[0]}w`
+    `${base}${stem}-${s[0]}.${ext} ${s[0]}w`
   )).join(', ');
   const last = entry.sizes[entry.sizes.length - 1];
 
   return '<picture>' +
     `<source type="image/avif" srcset="${srcset('avif')}" sizes="${sizes}">` +
-    `<img src="assets/food/${stem}-${last[0]}.webp"` +
+    `<img src="${base}${stem}-${last[0]}.webp"` +
     ` srcset="${srcset('webp')}" sizes="${sizes}"` +
     ` width="${last[0]}" height="${last[1]}"` +
     ` alt="${escapeHtml(alt || '')}"` +

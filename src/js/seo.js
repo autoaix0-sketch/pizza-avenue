@@ -1,24 +1,30 @@
 /* Complète la fiche Restaurant (JSON-LD de index.html) depuis les données :
-   la carte et ses prix viennent de src/data/menu.js, les horaires de
-   src/data/site.js — rien n'est recopié à la main dans le balisage. */
+   la carte et ses prix viennent de public/data/menu.js, les horaires de
+   public/data/hours.js — rien n'est recopié à la main dans le balisage. */
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-function hhmm(minutes) {
-  const h = Math.floor(minutes / 60) % 24;
-  const m = minutes % 60;
-  return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
-}
+import { schemaHours } from './hours.js';
 
 const fr = (v) => (v && typeof v === 'object' ? v.fr : v);
 
-function menuItem(item) {
-  return {
-    '@type': 'MenuItem',
-    name: item.num != null ? `${item.num}. ${fr(item.name)}` : fr(item.name),
-    ...(item.note ? { description: fr(item.note) } : {}),
-    offers: { '@type': 'Offer', price: item.price.toFixed(2), priceCurrency: 'EUR' }
-  };
+/* Un plat a un prix, ou des prix par colonne (Seul / Menu) : un MenuItem par
+   prix, la colonne en suffixe du nom. */
+function menuItems(item, labels) {
+  const base = item.num != null ? `${item.num}. ${fr(item.name)}` : fr(item.name);
+  const description = item.note ? { description: fr(item.note) } : {};
+  const offer = (price) => ({ '@type': 'Offer', price: Number(price).toFixed(2), priceCurrency: 'EUR' });
+
+  if (Array.isArray(item.tiers)) {
+    return item.tiers
+      .map((price, i) => (price == null ? null : {
+        '@type': 'MenuItem',
+        name: labels[i] ? `${base} (${labels[i]})` : base,
+        ...description,
+        offers: offer(price)
+      }))
+      .filter(Boolean);
+  }
+  if (item.price == null) return [];
+  return [{ '@type': 'MenuItem', name: base, ...description, offers: offer(item.price) }];
 }
 
 export function enrichRestaurantLd() {
@@ -35,30 +41,29 @@ export function enrichRestaurantLd() {
      /pizza-avenue/ (GitHub Pages). */
   data.url = new URL('./', document.baseURI).href;
   data.image = new URL('assets/og.jpg', document.baseURI).href;
-  data.hasMenu = {
-    '@type': 'Menu',
-    name: 'Menu halal',
-    hasMenuSection: menu.categories.map((cat) => ({
-      '@type': 'MenuSection',
-      name: fr(cat.name),
-      hasMenuItem: (cat.groups ? cat.groups.flatMap((g) => g.items) : cat.items).map(menuItem)
-    }))
-  };
+
+  const labels = (menu.tierLabels && menu.tierLabels.fr) || [];
+  const sections = (menu.categories || [])
+    .map((cat) => {
+      const items = (cat.groups ? cat.groups.flatMap((g) => g.items || []) : cat.items || [])
+        .filter((it) => !it.hidden);
+      return {
+        '@type': 'MenuSection',
+        name: fr(cat.name),
+        hasMenuItem: items.flatMap((it) => menuItems(it, labels))
+      };
+    })
+    .filter((s) => s.hasMenuItem.length);
+  data.hasMenu = { '@type': 'Menu', name: 'Menu halal', hasMenuSection: sections };
 
   if (site.address.lat) {
     data.geo = { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lng };
   }
 
-  /* Horaires : seulement quand ils existent (TODO-OWNER dans site.js). */
-  const services = (site.hours && site.hours.services) || [];
-  if (services.length) {
-    data.openingHoursSpecification = services.map((s) => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: DAYS,
-      opens: hhmm(s[0]),
-      closes: hhmm(s[1])
-    }));
-  }
+  /* Horaires : un créneau par service, plus les fermetures exceptionnelles. */
+  const { specs, closures } = schemaHours();
+  if (specs.length) data.openingHoursSpecification = specs;
+  if (closures.length) data.specialOpeningHoursSpecification = closures;
 
   node.textContent = JSON.stringify(data);
 }

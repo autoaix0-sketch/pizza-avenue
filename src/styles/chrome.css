@@ -15,6 +15,14 @@
   font-size: .82rem; font-weight: 600; text-align: center;
 }
 .openbar a { color: var(--gold); font-weight: 800; }
+.openbar[hidden], .openbar [hidden] { display: none; }
+/* Avis de fermeture exceptionnelle : bouton pour le fermer. */
+.openbar__close {
+  min-width: 2rem; min-height: 1.6rem; padding: 0 .4rem;
+  border: 0; border-radius: 999px; background: transparent;
+  color: var(--cream); font: inherit; font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.openbar__close:hover { background: rgba(247, 235, 211, .16); }
 /* Petit écran : une seule ligne (« Ouverture prochaine. @pizzavenue40100 »). */
 @media (max-width: 34rem) { .openbar__follow { display: none; } }
 @media (max-width: 30rem) { .topbar__name { display: none; } }

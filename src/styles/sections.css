@@ -222,7 +222,7 @@
 .ticket__name { font-weight: 700; }
 .ticket__note { color: var(--ink-mute); font-size: .82rem; }
 .ticket__cells { display: flex; gap: clamp(.9rem, 2vw, 1.8rem); }
-.ticket__cell { min-width: 4.2ch; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ticket__cell { min-width: 7.4ch; text-align: right; white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
 .ticket__cell i { color: var(--ink-faint); font-style: normal; }
 .ticket__price { font-weight: 800; color: var(--forest); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
@@ -433,6 +433,7 @@
   background: linear-gradient(to top, var(--bg) 45%, transparent);
 }
 .poster__foot p { margin: 0; max-width: 64%; font-size: .82rem; font-weight: 600; line-height: 1.4; }
+.poster__until { display: block; margin-top: .3rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
 .poster__cta {
   flex: none;
   display: inline-flex; align-items: center; gap: .45rem;
@@ -539,6 +540,8 @@
 .info-row dd { margin: 0; }
 .info-row a { text-decoration: underline; text-underline-offset: 3px; }
 .hours span { display: block; }
+.hours__group { margin-bottom: .45rem; }
+.hours__group b { display: block; font-size: .8rem; letter-spacing: .02em; color: var(--ink-mute); }
 
 .mapbox { position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 4/3; background: var(--forest-deep); }
 .mapbox__facade {
