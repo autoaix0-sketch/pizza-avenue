@@ -54,7 +54,7 @@ window.PIZZA_AVENUE_SITE = {
      dans la page) : Cloudflare > Analytics & Logs > Web Analytics > Add a site.
      Vide = aucun script chargé. */
   analytics: {
-    cloudflareToken: ""
+    cloudflareToken: "87e0045817844c48a9c60c16b888152a"
   },
 
   /* Pas d'avis pour l'instant : à zéro, la section « Les avis » reste

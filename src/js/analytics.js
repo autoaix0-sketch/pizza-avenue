@@ -8,7 +8,7 @@ export function loadAnalytics() {
   if (!token || !/^[A-Za-z0-9]{16,64}$/.test(token)) return;
 
   const script = document.createElement('script');
-  script.defer = true;
+  script.type = 'module'; // comme l'extrait donné par Cloudflare
   script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
   script.setAttribute('data-cf-beacon', JSON.stringify({ token }));
   document.head.appendChild(script);
