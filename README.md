@@ -26,6 +26,7 @@ Ou `avenue-pizza` dans `.claude/launch.json`.
 | Quoi | Fichier |
 |---|---|
 | Nom, adresse, téléphone, Instagram, bandeau « Ouverture prochaine » (`openingSoon`, éteint : le restaurant est ouvert) | `src/data/site.js` |
+| Mesure d'audience Cloudflare Web Analytics (`analytics.cloudflareToken`, vide = rien n'est chargé) et lien des avis Google (`links.googleReviews`) | `src/data/site.js` |
 | **La carte et les prix** (carte du 23 octobre 2026) | `public/data/menu.js` |
 | **Les horaires** (7j/7, 11:30–15:30 et 18:00–23:30) et les fermetures exceptionnelles | `public/data/hours.js` |
 | **Les offres** de la section « Formules & offres » (vide = la section disparaît) | `public/data/offers.js` |
@@ -43,7 +44,7 @@ valide (guillemets doubles, pas de virgule finale), sinon le tableau de bord ref
 de publier. Le JSON-LD pour Google (carte, prix, horaires, fermetures) est construit
 dans le navigateur par `src/js/seo.js` à partir de ces fichiers.
 
-Ce qui manque encore est marqué `TODO-OWNER` (infos légales, coordonnées GPS).
+Ce qui manque encore est marqué `TODO-OWNER` (infos légales).
 
 ## En ligne
 

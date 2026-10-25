@@ -31,10 +31,10 @@ window.PIZZA_AVENUE_SITE = {
     region: "Landes",
     country: "FR",
     mapsUrl: "https://maps.app.goo.gl/1YcMSX9xrhdtXAe47",
-    /* TODO-OWNER — coordonnées GPS exactes (facultatif). Vides : le bouton
-       « Itinéraire » ouvre simplement le lien Google Maps ci-dessus. */
-    lat: 0,
-    lng: 0
+    /* Coordonnées de l'adresse, lues sur le lien Google Maps ci-dessus
+       (25 oct. 2026). Le bouton « Itinéraire » y mène directement. */
+    lat: 43.7161707,
+    lng: -1.05393
   },
 
   phone: {
