@@ -7,7 +7,7 @@ C'est une copie de la démo `sites/pizza-avenue` (démo 09 du Fast Food Lab, qui
 fictive), habillée avec la vraie marque (mascotte) et le vrai menu halal.
 
 Sources (jamais modifiées) :
-`sites/PIZZA AVENUE_V2/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/`
+`sites/PIZZA AVENUE_best/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/`
 (menu : `00_content/menu-halal_structured.json`, faits : `00_content/SITE_FACTS.md`).
 
 ## Lancer en local

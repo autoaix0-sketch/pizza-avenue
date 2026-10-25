@@ -7,7 +7,7 @@
    public/data/ : la carte (menu.js), les horaires (hours.js), les offres
    (offers.js) et les photos envoyées (uploads.js).
 
-   Source : sites/PIZZA AVENUE_V2/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/
+   Source : sites/PIZZA AVENUE_best/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/
    00_content/SITE_FACTS.md. Ce qui manque encore est marqué "TODO-OWNER".
    ========================================================================= */
 

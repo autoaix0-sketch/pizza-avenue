@@ -1,7 +1,7 @@
 # Sources des images
 
 Toutes les images viennent de
-`sites/PIZZA AVENUE_V2/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/` (BR/).
+`sites/PIZZA AVENUE_best/AVENUE_PIZZA_LIBRARY/10_WEBSITE_BUILD_READY/` (BR/).
 Les copies brutes sont dans `raw/`. Images générées par IA (pas des photos de la boutique).
 
 | Fichier du site | Source BR/ | Traitement |

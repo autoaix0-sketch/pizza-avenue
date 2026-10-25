@@ -67,9 +67,21 @@ function boot(photoUrl) {
   applyLanguage(initialLanguage(), reviewCount);
   initHero({ reduced, hasPhoto: !!photoUrl });
   document.getElementById('heroStage')?.classList.add('is-ready');
+  jumpToHash();
 
   /* Le badge ouvert / fermé et l'avis de fermeture se mettent à jour seuls. */
   setInterval(() => { paintStatus(); renderBanner(); }, 60000);
+}
+
+/* Un lien vers une section (…/#menu partagé sur Instagram ou WhatsApp) : le
+   navigateur saute à l'ancre avant que l'épinglage du héros n'ajoute sa
+   hauteur, et la page reste en haut. On refait le saut, sans animation, une
+   fois le héros en place. */
+function jumpToHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = id && id !== 'top' ? document.getElementById(id) : null;
+  if (!target || target.hidden) return;
+  requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: 'instant' }));
 }
 
 /* Le héros ne démarre qu'une fois les polices ET la photo prêtes : le
