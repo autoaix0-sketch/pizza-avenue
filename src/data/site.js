@@ -49,6 +49,14 @@ window.PIZZA_AVENUE_SITE = {
     orderOnline: ""
   },
 
+  /* Cloudflare Web Analytics : visites, pages, provenance. Sans cookie, donc
+     sans bandeau de consentement. Le jeton n'est pas un secret (il est visible
+     dans la page) : Cloudflare > Analytics & Logs > Web Analytics > Add a site.
+     Vide = aucun script chargé. */
+  analytics: {
+    cloudflareToken: ""
+  },
+
   /* Pas d'avis pour l'instant : à zéro, la section « Les avis » reste
      masquée (voir src/js/sections.js: initReviewsVisibility). */
   reviews: {

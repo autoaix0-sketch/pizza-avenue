@@ -25,6 +25,7 @@ import { initReveals, initNavScrim, initReviewsVisibility, numberSections, initM
 import { initHero } from './js/hero/timeline.js';
 import { enrichRestaurantLd } from './js/seo.js';
 import { loadHeroPhoto } from './js/hero/photo.js';
+import { loadAnalytics } from './js/analytics.js';
 
 // Le téléchargement de la photo du héros part dès l'évaluation du module,
 // en parallèle des polices — c'est l'image la plus importante de la page.
@@ -68,6 +69,7 @@ function boot(photoUrl) {
   initHero({ reduced, hasPhoto: !!photoUrl });
   document.getElementById('heroStage')?.classList.add('is-ready');
   jumpToHash();
+  loadAnalytics();
 
   /* Le badge ouvert / fermé et l'avis de fermeture se mettent à jour seuls. */
   setInterval(() => { paintStatus(); renderBanner(); }, 60000);
