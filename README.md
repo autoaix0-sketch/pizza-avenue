@@ -50,12 +50,21 @@ Ce qui manque encore est marqué `TODO-OWNER` (infos légales).
 
 - Code : GitHub `autoaix0-sketch/pizza-avenue` (le dépôt porte le nom de la marque ;
   le dossier s'appelle `avenue-pizza` car `sites/pizza-avenue` est la démo du Lab).
-- Version de présentation pour le client : **https://autoaix0-sketch.github.io/pizza-avenue/**
-  (GitHub Pages). Chaque push sur `main` reconstruit et republie le site
-  (`.github/workflows/pages.yml`, avec `BASE_PATH=/pizza-avenue/`).
-- `vercel.json` est prêt si le site passe un jour sur Vercel (`vercel deploy --prod --yes`).
+- **Site principal : https://pizza-avenue-dax.vercel.app** (projet Vercel
+  `pizza-avenue-dax`, relié au dépôt GitHub depuis le 26 oct. 2026). Chaque push sur
+  `main` (le tien ou celui du tableau de bord) le republie en moins d'une minute.
+  Réglage Vercel : `SITE_URL=https://pizza-avenue-dax.vercel.app/` (image de partage
+  absolue). Le nom `pizza-avenue.vercel.app` appartient à quelqu'un d'autre.
+- Copie de secours : https://autoaix0-sketch.github.io/pizza-avenue/ (GitHub Pages,
+  `.github/workflows/pages.yml` avec `BASE_PATH=/pizza-avenue/`). À couper quand le
+  nom de domaine sera en ligne.
+- Mesure d'audience : Cloudflare Web Analytics ne compte qu'un seul nom d'hôte (celui
+  du site Cloudflare, aujourd'hui `pizza-avenue-dax.vercel.app`). À changer dans
+  Cloudflare > Web Analytics > Manage site quand le domaine arrive.
 
 **Avant le vrai lancement** :
+- brancher le nom de domaine dans le projet Vercel, puis mettre ce domaine dans
+  `SITE_URL` (site et tableau de bord) et dans Cloudflare Web Analytics ;
 - retirer `<meta name="robots" content="noindex, nofollow">` de `index.html` et l'en-tête
   `X-Robots-Tag` de `vercel.json` (ils cachent le site à Google tant que les infos ne
   sont pas confirmées) ;
