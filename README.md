@@ -82,6 +82,10 @@ Le site est ouvert à Google depuis le 3 nov. 2026.
   par `src/js/venir.js`. Le même texte des deux côtés : la page reste lisible si le
   JavaScript ne part pas.
 
+**La fiche Google** (carte, avis, horaires) compte plus qu'un site pour un
+restaurant : voir `FICHE-GOOGLE.md` — les infos prêtes à copier, les choix qui
+restent à faire et les étapes de validation.
+
 **Quand le nom de domaine arrivera**, changer l'adresse à trois endroits :
 `<link rel="canonical">` dans `index.html`, la ligne `Sitemap:` dans
 `public/robots.txt` et `<loc>` dans `public/sitemap.xml` — en plus de `SITE_URL`
