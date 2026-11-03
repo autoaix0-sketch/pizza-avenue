@@ -62,12 +62,28 @@ Ce qui manque encore est marqué `TODO-OWNER` (infos légales).
   du site Cloudflare, aujourd'hui `pizza-avenue-dax.vercel.app`). À changer dans
   Cloudflare > Web Analytics > Manage site quand le domaine arrive.
 
+## Référencement (SEO)
+
+Le site est ouvert à Google depuis le 3 nov. 2026.
+
+- `index.html` : plus de `noindex`, et un `<link rel="canonical">` vers l'adresse du
+  site. `mentions-legales.html` garde son `noindex, follow` : Google lit la page et
+  suit ses liens, mais ne la montre pas dans les résultats.
+- `vercel.json` : l'en-tête `X-Robots-Tag: noindex, nofollow` a été retirée. Elle
+  cachait le site à Google même sans la balise dans la page.
+- `public/robots.txt` et `public/sitemap.xml` : Vite les copie à la racine du site
+  (`/robots.txt`, `/sitemap.xml`). Le sitemap ne liste que la page d'accueil.
+- Adresse, téléphone et horaires sont écrits en clair dans `index.html` **et** remis
+  par `src/js/venir.js`. Le même texte des deux côtés : la page reste lisible si le
+  JavaScript ne part pas.
+
+**Quand le nom de domaine arrivera**, changer l'adresse à trois endroits :
+`<link rel="canonical">` dans `index.html`, la ligne `Sitemap:` dans
+`public/robots.txt` et `<loc>` dans `public/sitemap.xml` — en plus de `SITE_URL`
+côté Vercel.
+
 **Avant le vrai lancement** :
 - brancher le nom de domaine dans le projet Vercel, puis mettre ce domaine dans
   `SITE_URL` (site et tableau de bord) et dans Cloudflare Web Analytics ;
-- retirer `<meta name="robots" content="noindex, nofollow">` de `index.html` et l'en-tête
-  `X-Robots-Tag` de `vercel.json` (ils cachent le site à Google tant que les infos ne
-  sont pas confirmées) ;
-- ajouter `<link rel="canonical">` dans `index.html` avec le nom de domaine final ;
 - compléter les `TODO-OWNER` : **mentions légales** (nom de l'exploitant, forme
   juridique, SIRET, e-mail, directeur de la publication, hébergeur).

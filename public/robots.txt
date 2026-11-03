@@ -1,0 +1,10 @@
+# Pizza Avenue — Dax
+# Tout le site est ouvert aux moteurs de recherche.
+# mentions-legales.html n'est pas bloqué ici : sa balise
+# <meta name="robots" content="noindex, follow"> suffit. Bloquer la page
+# empêcherait Google de lire cette balise.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://pizza-avenue-dax.vercel.app/sitemap.xml
