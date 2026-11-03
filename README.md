@@ -73,6 +73,11 @@ Le site est ouvert à Google depuis le 3 nov. 2026.
   cachait le site à Google même sans la balise dans la page.
 - `public/robots.txt` et `public/sitemap.xml` : Vite les copie à la racine du site
   (`/robots.txt`, `/sitemap.xml`). Le sitemap ne liste que la page d'accueil.
+- Fiche Restaurant (JSON-LD) : `src/js/seo.js` y ajoute la carte, les prix, les
+  horaires et les coordonnées. `priceRange` (« 7,50–12,50 € ») est **calculé**
+  depuis `public/data/menu.js` : il suit le tableau de bord tout seul. Les
+  accompagnements, desserts et boissons sont exclus du calcul — sinon la
+  fourchette partirait de 1 € (une bouteille d'eau). Voir `NOT_A_MEAL`.
 - Adresse, téléphone et horaires sont écrits en clair dans `index.html` **et** remis
   par `src/js/venir.js`. Le même texte des deux côtés : la page reste lisible si le
   JavaScript ne part pas.

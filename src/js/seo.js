@@ -27,6 +27,34 @@ function menuItems(item, labels) {
   return [{ '@type': 'MenuItem', name: base, ...description, offers: offer(item.price) }];
 }
 
+/* « 7,50–12,50 € » : ce que coûte un plat, calculé depuis la carte. Le prix
+   n'est donc jamais recopié à la main : il suit le tableau de bord.
+   Les accompagnements, les desserts et les boissons sont exclus — ce ne sont
+   pas des plats, et sans eux la fourchette commencerait à 1 € (une petite
+   bouteille d'eau), ce qui ferait croire qu'on mange ici pour 1 €. */
+const NOT_A_MEAL = ['texmex', 'desserts', 'boissons'];
+
+function euro(n) {
+  return n.toFixed(2).replace('.', ',').replace(',00', '');
+}
+
+function priceRange(menu) {
+  const prices = [];
+  (menu.categories || [])
+    .filter((cat) => NOT_A_MEAL.indexOf(cat.id) === -1)
+    .forEach((cat) => {
+      const items = cat.groups ? cat.groups.flatMap((g) => g.items || []) : (cat.items || []);
+      items.filter((it) => !it.hidden).forEach((it) => {
+        if (Array.isArray(it.tiers)) it.tiers.forEach((p) => { if (p != null) prices.push(Number(p)); });
+        else if (it.price != null) prices.push(Number(it.price));
+      });
+    });
+  if (!prices.length) return '';
+  const min = Math.min.apply(null, prices);
+  const max = Math.max.apply(null, prices);
+  return min === max ? euro(min) + ' €' : euro(min) + '–' + euro(max) + ' €';
+}
+
 export function enrichRestaurantLd() {
   const node = document.getElementById('restaurantLd');
   const site = window.PIZZA_AVENUE_SITE;
@@ -41,6 +69,10 @@ export function enrichRestaurantLd() {
      /pizza-avenue/ (GitHub Pages). */
   data.url = new URL('./', document.baseURI).href;
   data.image = new URL('assets/og.jpg', document.baseURI).href;
+
+  /* Plus précis que le « € » écrit dans index.html. */
+  const range = priceRange(menu);
+  if (range) data.priceRange = range;
 
   const labels = (menu.tierLabels && menu.tierLabels.fr) || [];
   const sections = (menu.categories || [])
