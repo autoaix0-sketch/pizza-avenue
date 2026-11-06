@@ -32,7 +32,7 @@ et une fiche refusée est longue à débloquer.
 | Téléphone | `09 66 13 03 02` | `src/data/site.js`, confirmé par le propriétaire |
 | Site web | `https://pizza-avenue-dax.vercel.app/` | projet Vercel `pizza-avenue-dax` |
 | Lien du menu | `https://pizza-avenue-dax.vercel.app/#menu` | la carte est sur la page d'accueil |
-| Horaires | **Tous les jours** : 11:30 – 15:30 puis 18:00 – 23:30 | `public/data/hours.js`, confirmé par le propriétaire |
+| Horaires | **Tous les jours** : 11:30 – 15:00 puis 18:00 – 23:30 | `public/data/hours.js`, confirmé par le propriétaire |
 | Position sur la carte | 43.7161707, -1.05393 | `src/data/site.js` |
 | Réservations | Non | `acceptsReservations: false` |
 
