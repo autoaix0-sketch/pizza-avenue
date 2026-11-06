@@ -35,6 +35,7 @@ export function renderContact() {
   if (footLinks) {
     const links = [];
     if (site.links.instagram) links.push(`<a href="${site.links.instagram}" target="_blank" rel="noopener">Instagram</a>`);
+    if (site.links.tiktok) links.push(`<a href="${site.links.tiktok}" target="_blank" rel="noopener">TikTok</a>`);
     if (site.links.googleReviews) links.push(`<a href="${site.links.googleReviews}" target="_blank" rel="noopener">Google</a>`);
     footLinks.innerHTML = links.join('');
   }

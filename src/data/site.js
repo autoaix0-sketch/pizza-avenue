@@ -45,6 +45,7 @@ window.PIZZA_AVENUE_SITE = {
   /* Commande : par téléphone uniquement. Laisser vide ("") = pas de bouton. */
   links: {
     instagram: "https://www.instagram.com/pizzavenue40100/",
+    tiktok: "https://www.tiktok.com/@pizza.avenue.dax",
     googleReviews: "",
     orderOnline: ""
   },
